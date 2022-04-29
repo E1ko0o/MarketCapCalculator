@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\results.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\taiw.csv">
           <value>
             <Attribute>

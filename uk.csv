@@ -1,9 +1,4 @@
-Rank,Name,Symbol,marketcap,price (USD)
-1,Astrazeneca,AZN,208401694720,67.25
-2,Shell,SHEL,205308821504,54.5
-3,Linde,LIN,160142770176,315.4
-4,British American Tobacco,BTI,96145833984,42.15
-5,Aon,AON,64340447232,300.74
-6,Farfetch,FTCH,4583418368,12.02
-7,Manchester United,MANU,2205430528,13.53
-8,Arrival,ARVL,1318060544,2.07
+Rank,Name,Symbol
+1,Astrazeneca,AZN
+2,British American Tobacco,BTI
+3,Arrival,ARVL
