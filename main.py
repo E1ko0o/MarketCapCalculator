@@ -23,13 +23,29 @@ def read_csv_and_fill_data():
             if regex.match(file):
                 with open(file, 'r', encoding='utf8') as f:
                     for line in f:
-                        if line.__contains__(',Symbol'):
+                        if line.__contains__('Symbol'):
                             continue
                         companies.append([])
                         _, _1, symbol = list(line.split(','))
                         symbol = symbol.replace('\n', '')
                         companies[index].append(symbol)
                         index += 1
+
+
+def read_csv_results():
+    index = 0
+    with open('results.csv', 'r', encoding='utf8') as f:
+        for line in f:
+            if line.__contains__('Symbol'):
+                continue
+            companies.append([])
+            symbol, cap, pe = list(line.split(','))
+            cap = int(cap)
+            pe = float(pe.replace('\n', ''))
+            companies[index].append(symbol)
+            companies[index].append(cap)
+            companies[index].append(pe)
+            index += 1
 
 
 def check_pe_ratio(target: float):
@@ -55,24 +71,27 @@ def sort_by_cap():
     companies.sort(key=lambda x: x[1], reverse=True)
 
 
-if __name__ == '__main__':
-    start_timer = get_current_time_milliseconds()
-    # companies = [['AAPL'], ['TSLA'], ['BRK-B'], ['LI']]
-    read_csv_and_fill_data()
-    sum_cap = 0
+def get_data_yf():
     for i in range(len(companies)):
-        print(companies[i][0])
         yf = YahooFinancials(companies[i][0])
         market_cap = yf.get_market_cap()
         pe_ratio = yf.get_pe_ratio()
-
         companies[i].append(market_cap)
         companies[i].append(pe_ratio)
         print(companies[i])
-    sort_by_cap()
-    check_pe_ratio(50)
-    write_output()
-    # print(companies)
+
+
+if __name__ == '__main__':
+    start_timer = get_current_time_milliseconds()
+    # companies = [['AAPL'], ['TSLA'], ['BRK-B'], ['LI']]
+    # read_csv_and_fill_data()
+    read_csv_results()
+    sum_cap = 0
+    # get_data_yf()
+    # sort_by_cap()
+    # check_pe_ratio(50)
+    # write_output()
+    print(companies)
     # for i in range(len(companies)):
     #     sum_cap += companies[i][1]
     # for i in range(len(companies)):
