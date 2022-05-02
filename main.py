@@ -72,30 +72,42 @@ def sort_by_cap():
 
 
 def get_data_yf():
-    for i in range(len(companies)):
-        yf = YahooFinancials(companies[i][0])
+    for j in range(len(companies)):
+        yf = YahooFinancials(companies[j][0])
         market_cap = yf.get_market_cap()
         pe_ratio = yf.get_pe_ratio()
-        companies[i].append(market_cap)
-        companies[i].append(pe_ratio)
-        print(companies[i])
+        companies[j].append(market_cap)
+        companies[j].append(pe_ratio)
+        print(companies[j])
+
+
+def update_data():
+    read_csv_and_fill_data()
+    get_data_yf()
+    sort_by_cap()
+    check_pe_ratio(50)
+    write_output()
 
 
 if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
+
     # companies = [['AAPL'], ['TSLA'], ['BRK-B'], ['LI']]
-    # read_csv_and_fill_data()
-    read_csv_results()
-    sum_cap = 0
-    # get_data_yf()
-    # sort_by_cap()
-    # check_pe_ratio(50)
-    # write_output()
-    print(companies)
+    # for i in range(len(companies)):
+    #     yf = YahooFinancials(companies[i])
+    #     data = yf.get_stock_quote_type_data()
+    #     print(data)
+
+    # update_data()
+    # read_csv_results()
+    # sum_cap = 0
+    # print(companies)
     # for i in range(len(companies)):
     #     sum_cap += companies[i][1]
     # for i in range(len(companies)):
-    #     print(int(companies[i][1])/sum_cap)
+    #     companies[i].append(round((int(companies[i][1]) / sum_cap) * 100, 3))
+    # print(companies)
+
     end_timer = get_current_time_milliseconds()
     time_of_running = end_timer - start_timer
     print('Time of running in milliseconds: ' + str(time_of_running))
