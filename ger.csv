@@ -1,12 +1,12 @@
-Rank,Name,Symbol
-1,SAP,SAP
-2,Siemens,SIEGY
-3,Volkswagen,VOW3.DE
-4,Allianz,ALIZF
-5,Mercedes-Benz,MBG.DE
-6,Bayer,BAYZF
-7,Siemens Healthineers,SEMHF
-9,Adidas,ADDDF
-10,BioNTech,BNTX
-11,Deutsche Bank,DB
-12,PUMA,PUM.DE
+Rank,Name,Symbol,Industry-Sector
+1,SAP,SAP,Software Application-Technology
+2,Siemens,SIEGY,Specialty Industrial Machinery-Industrials
+3,Volkswagen,VOW3.DE,Auto Manufacturers-Consumer Cyclical
+4,Allianz,ALIZF,Insurance—Diversified-Financial Services
+5,Mercedes-Benz,MBG.DE,Auto Manufacturers-Consumer Cyclical
+6,Bayer,BAYZF,Drug Manufacturers General-Healthcare
+7,Siemens Healthineers,SEMHF,Medical Devices-Healthcare
+9,Adidas,ADDDF,Footwear & Accessories-Consumer Cyclical
+10,BioNTech,BNTX,Biotechnology-Healthcare
+11,Deutsche Bank,DB,Banks Regional-Financial Services
+12,PUMA,PUM.DE,Footwear & Accessories-Consumer Cyclical

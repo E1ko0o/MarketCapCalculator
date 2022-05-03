@@ -1,69 +1,69 @@
-Rank,Name,Symbol
-1,Apple,AAPL
-2,Microsoft,MSFT
-3,Alphabet (Google),GOOG
-4,Amazon,AMZN
-5,Tesla,TSLA
-6,Berkshire Hathaway,BRK-B
-7,Meta (Facebook),FB
-8,NVIDIA,NVDA
-9,UnitedHealth,UNH
-12,Walmart,WMT
-13,Procter & Gamble,PG
-15,Exxon Mobil,XOM
-18,Chevron,CVX
-19,Bank of America,BAC
-20,Coca-Cola,KO
-21,Pfizer,PFE
-23,AbbVie,ABBV
-25,Pepsico,PEP
-26,Broadcom,AVGO
-27,Merck,MRK
-29,Walt Disney,DIS
-30,Cisco,CSCO
-31,Abbott Laboratories,ABT
-32,Oracle,ORCL
-33,Verizon,VZ
-34,Nike,NKE
-35,Adobe,ADBE
-36,McDonald,MCD
-38,Comcast,CMCSA
-40,Intel,INTC
-41,Wells Fargo,WFC
-42,QUALCOMM,QCOM
-44,T-Mobile US,TMUS
-45,Texas Instruments,TXN
-51,AMD,AMD
-53,AT&T,T
-59,CVS Health,CVS
-65,IBM,IBM
-69,Caterpillar,CAT
-70,Target,TGT
-85,Netflix,NFLX
-87,Intuitive Surgical,ISRG
-91,General Electric,GE
-99,Micron Technology,MU
-120,Lam Research,LRCX
-124,Colgate-Palmolive,CL
-131,Snowflake,SNOW
-134,Activision Blizzard,ATVI
-137,Moderna,MRNA
-150,FedEx,FDX
-151,Kraft Heinz,KHC
-179,Vmware,VMW
-201,Autodesk,ADSK
-239,Tyson Foods,TSN
-241,Electronic Arts,EA
-247,Consolidated Edison,ED
-257,Coinbase,COIN
-267,Biogen,BIIB
-291,Rivian,RIVN
-383,Fox Corporation,FOX
-390,Roblox,RBLX
-519,Alcoa,AA
-523,Roku,ROKU
-537,Hasbro,HAS
-640,NRG Energy,NRG
-642,Tapestry,TPR
-1195,Livent,LTHM
-1303,SunPower,SPWR
+Rank,Name,Symbol,Industry-Sector
+1,Apple,AAPL,Consumer Electronics-Technology
+2,Microsoft,MSFT,Software—Infrastructure-Technology
+3,Alphabet (Google),GOOG,Internet Content & Information-Communication Services
+4,Amazon,AMZN,Internet Retail-Consumer Cyclical
+5,Tesla,TSLA,Auto Manufacturers-Consumer Cyclical
+6,Berkshire Hathaway,BRK-B,Insurance—Diversified-Financial Services
+7,Meta (Facebook),FB,Internet Content & Information-Communication Services
+8,NVIDIA,NVDA,Semiconductors-Technology
+9,UnitedHealth,UNH,Healthcare Plans-Healthcare
+12,Walmart,WMT,Discount Stores-Consumer Defensive
+13,Procter & Gamble,PG,Household & Personal Products-Consumer Defensive
+15,Exxon Mobil,XOM,Oil & Gas Integrated-Energy
+18,Chevron,CVX,Oil & Gas Integrated-Energy
+19,Bank of America,BAC,Banks Diversified-Financial Services
+20,Coca-Cola,KO,Beverages—Non-Alcoholic-Consumer Defensive
+21,Pfizer,PFE,Drug Manufacturers General-Healthcare
+23,AbbVie,ABBV,Drug Manufacturers General-Healthcare
+25,Pepsico,PEP,Beverages—Non-Alcoholic-Consumer Defensive
+26,Broadcom,AVGO,Semiconductors-Technology
+27,Merck,MRK,Drug Manufacturers General-Healthcare
+29,Walt Disney,DIS,Entertainment-Communication Services
+30,Cisco,CSCO,Communication Equipment-Technology
+31,Abbott Laboratories,ABT,Medical Devices-Healthcare
+32,Oracle,ORCL,Software Infrastructure-Technology
+33,Verizon,VZ,Telecom Services-Communication Services
+34,Nike,NKE,Footwear & Accessories-Consumer Cyclical
+35,Adobe,ADBE,Software Infrastructure-Technology
+36,McDonald,MCD,Restaurants-Consumer Cyclical
+38,Comcast,CMCSA,Entertainment-Communication Services
+40,Intel,INTC,Semiconductors-Technology
+41,Wells Fargo,WFC,Banks Diversified-Financial Services
+42,QUALCOMM,QCOM,Semiconductors-Technology
+44,T-Mobile US,TMUS,Telecom Services-Communication Services
+45,Texas Instruments,TXN,Semiconductors-Technology
+51,AMD,AMD,Semiconductors-Technology
+53,AT&T,T,Telecom Services-Communication Services
+59,CVS Health,CVS,Healthcare Plans-Healthcare
+65,IBM,IBM,Information Technology Services-Technology
+69,Caterpillar,CAT,Farm & Heavy Construction Machinery-Industrials
+70,Target,TGT,Discount Stores-Consumer Defensive
+85,Netflix,NFLX,Entertainment-Communication Services
+87,Intuitive Surgical,ISRG,Medical Instruments & Supplies-Healthcare
+91,General Electric,GE,Specialty Industrial Machinery-Industrials
+99,Micron Technology,MU,Semiconductors-Technology
+120,Lam Research,LRCX,Semiconductor Equipment & Materials-Technology
+124,Colgate-Palmolive,CL,Household & Personal Products-Consumer Defensive
+131,Snowflake,SNOW,Software Application-Technology
+134,Activision Blizzard,ATVI,Electronic Gaming & Multimedia-Communication Services
+137,Moderna,MRNA,Biotechnology-Healthcare
+150,FedEx,FDX,Integrated Freight & Logistics-Industrials
+151,Kraft Heinz,KHC,Packaged Foods-Consumer Defensive
+179,Vmware,VMW,Software Infrastructure-Technology
+201,Autodesk,ADSK,Software Application-Technology
+239,Tyson Foods,TSN,Farm Products-Consumer Defensive
+241,Electronic Arts,EA,Electronic Gaming & Multimedia-Communication Services
+247,Consolidated Edison,ED,Utilities Regulated Electric-Utilities
+257,Coinbase,COIN,Software Application-Technology
+267,Biogen,BIIB,Drug Manufacturers General-Healthcare
+291,Rivian,RIVN,Auto Manufacturers-Consumer Cyclical
+383,Fox Corporation,FOX,Broadcasting-Communication Services
+390,Roblox,RBLX,Electronic Gaming & Multimedia-Communication Services
+519,Alcoa,AA,Aluminum-Basic Materials
+523,Roku,ROKU,Entertainment-Communication Services
+537,Hasbro,HAS,Leisure-Consumer Cyclical
+640,NRG Energy,NRG,Independent Power Producers-Utilities
+642,Tapestry,TPR,Luxury Goods-Consumer Cyclical
+1195,Livent,LTHM,Specialty Chemicals-Basic Materials
+1303,SunPower,SPWR,Solar-Technology

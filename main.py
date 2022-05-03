@@ -26,9 +26,10 @@ def read_csv_and_fill_data():
                         if line.__contains__('Symbol'):
                             continue
                         companies.append([])
-                        _, _1, symbol = list(line.split(','))
-                        symbol = symbol.replace('\n', '')
+                        _, _1, symbol, sector = list(line.split(','))
+                        sector = sector.replace('\n', '')
                         companies[index].append(symbol)
+                        companies[index].append(sector)
                         index += 1
 
 
@@ -39,67 +40,91 @@ def read_csv_results():
             if line.__contains__('Symbol'):
                 continue
             companies.append([])
-            symbol, cap, pe = list(line.split(','))
+            symbol, cap, pe, price, sector = list(line.split(','))
             cap = int(cap)
             pe = float(pe.replace('\n', ''))
             companies[index].append(symbol)
             companies[index].append(cap)
             companies[index].append(pe)
+            companies[index].append(price)
+            companies[index].append(sector)
             index += 1
 
 
 def check_pe_ratio(target: float):
     j = 0
     while j < len(companies):
-        if companies[j][2] is not None:
-            if float(companies[j][2]) > target:
-                companies.remove(companies[j])
-        else:
-            companies[j][2] = 1.0
+        if float(companies[j][3]) > target:
+            companies.remove(companies[j])
+            j -= 1
         j += 1
 
 
 def write_output():
-    # csv to txt
     with open('results.csv', 'w') as f:
-        f.write('Symbol,Market Cap,P/E Ratio\n')
+        f.write('Symbol,Market Cap,P/E Ratio,Current/last price,Industry-Sector\n')
         for j in range(len(companies)):
-            f.write(f'{companies[j][0]},{companies[j][1]},{companies[j][2]}\n')
+            f.write(f'{companies[j][0]},{companies[j][2]},{companies[j][3]},{companies[j][4]},{companies[j][1]}\n')
 
 
 def sort_by_cap():
-    companies.sort(key=lambda x: x[1], reverse=True)
+    companies.sort(key=lambda x: x[2], reverse=True)
 
 
 def get_data_yf():
-    for j in range(len(companies)):
+    j = 0
+    while j < len(companies):
         yf = YahooFinancials(companies[j][0])
+
+        net_income = yf.get_net_income()
+        if net_income < 0:
+            print('Skip and remove: ' + companies[j][0])
+            companies.remove(companies[j])
+            continue
+
         market_cap = yf.get_market_cap()
+        if market_cap is not None:
+            companies[j].append(market_cap)
+        else:
+            companies[j].append(0)
+
         pe_ratio = yf.get_pe_ratio()
-        companies[j].append(market_cap)
-        companies[j].append(pe_ratio)
+        if pe_ratio is not None:
+            companies[j].append(round(pe_ratio, 2))
+        else:
+            companies[j].append(0)
+
+        price = yf.get_current_price()
+        if price is not None:
+            companies[j].append(round(price, 2))
+        else:
+            companies[j].append(0)
         print(companies[j])
+        j += 1
 
 
 def update_data():
     read_csv_and_fill_data()
     get_data_yf()
     sort_by_cap()
-    check_pe_ratio(50)
+    check_pe_ratio(30)
     write_output()
 
 
 if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
 
-    # companies = [['AAPL'], ['TSLA'], ['BRK-B'], ['LI']]
-    # for i in range(len(companies)):
-    #     yf = YahooFinancials(companies[i])
-    #     data = yf.get_stock_quote_type_data()
-    #     print(data)
+    # companies = [['AAPL'], ['TSLA'], ['BRK-B'], ['LI'], ['MOMO']]
+    # for j in range(len(companies)):
+    #     yf = YahooFinancials(companies[j][0])
+    #     net_income = yf.get_net_income()
+    #     companies[j].append(net_income)
+    #     print(companies[j])
+    # sort_by_cap()
 
-    # update_data()
+    update_data()
     # read_csv_results()
+
     # sum_cap = 0
     # print(companies)
     # for i in range(len(companies)):
