@@ -62,9 +62,9 @@ def check_pe_ratio(target: float):
 
 def write_output():
     with open('results.csv', 'w') as f:
-        f.write('Symbol,Market Cap,P/E Ratio,Current/last price,Industry-Sector\n')
+        f.write('Symbol,Market Cap,P/E Ratio,Current/last price in USD,Number of stocks,Industry-Sector\n')
         for j in range(len(companies)):
-            f.write(f'{companies[j][0]},{companies[j][2]},{companies[j][3]},{companies[j][4]},{companies[j][1]}\n')
+            f.write(f'{companies[j][0]},{companies[j][2]},{companies[j][3]},{companies[j][4]},{companies[j][5]},{companies[j][1]}\n')
 
 
 def sort_by_cap():
@@ -103,35 +103,36 @@ def get_data_yf():
         j += 1
 
 
+def count_number_of_stocks(amount_in_usd: int):
+    sum_cap = 0
+    for i in range(len(companies)):
+        sum_cap += companies[i][2]
+    for i in range(len(companies)):
+        percentage = round((int(companies[i][2]) / sum_cap), 5)
+        amount_for_company = round(amount_in_usd * percentage, 5)
+        number_of_stocks = float(amount_for_company) // float(companies[i][4])
+        companies[i].append(int(number_of_stocks))
+
+
 def update_data():
     read_csv_and_fill_data()
     get_data_yf()
-    sort_by_cap()
     check_pe_ratio(30)
+    sort_by_cap()
+    count_number_of_stocks(15000)
     write_output()
 
 
 if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
 
-    # companies = [['AAPL'], ['TSLA'], ['BRK-B'], ['LI'], ['MOMO']]
-    # for j in range(len(companies)):
-    #     yf = YahooFinancials(companies[j][0])
-    #     net_income = yf.get_net_income()
-    #     companies[j].append(net_income)
-    #     print(companies[j])
-    # sort_by_cap()
+    # companies = [['AAPL'], ['TSM'], ['BRK-B']]
+    # get_data_yf()
+    # count_number_of_stocks(10000)
+    # print(companies)
 
     update_data()
     # read_csv_results()
-
-    # sum_cap = 0
-    # print(companies)
-    # for i in range(len(companies)):
-    #     sum_cap += companies[i][1]
-    # for i in range(len(companies)):
-    #     companies[i].append(round((int(companies[i][1]) / sum_cap) * 100, 3))
-    # print(companies)
 
     end_timer = get_current_time_milliseconds()
     time_of_running = end_timer - start_timer
