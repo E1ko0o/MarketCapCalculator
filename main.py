@@ -51,6 +51,18 @@ def read_csv_results():
             index += 1
 
 
+def write_output():
+    with open('results.csv', 'w') as f:
+        f.write('Symbol,Market Cap,P/E Ratio,Current/last price in USD,Number of stocks,Industry-Sector\n')
+        for j in range(len(companies)):
+            f.write(f'{companies[j][0]},{companies[j][2]},{companies[j][3]},'
+                f'{companies[j][4]},{companies[j][5]},{companies[j][1]}\n')
+
+
+def sort_by_cap():
+    companies.sort(key=lambda x: x[2], reverse=True)
+
+
 def check_pe_ratio(target: float):
     j = 0
     while j < len(companies):
@@ -58,17 +70,6 @@ def check_pe_ratio(target: float):
             companies.remove(companies[j])
             j -= 1
         j += 1
-
-
-def write_output():
-    with open('results.csv', 'w') as f:
-        f.write('Symbol,Market Cap,P/E Ratio,Current/last price in USD,Number of stocks,Industry-Sector\n')
-        for j in range(len(companies)):
-            f.write(f'{companies[j][0]},{companies[j][2]},{companies[j][3]},{companies[j][4]},{companies[j][5]},{companies[j][1]}\n')
-
-
-def sort_by_cap():
-    companies.sort(key=lambda x: x[2], reverse=True)
 
 
 def get_data_yf():
@@ -92,7 +93,15 @@ def get_data_yf():
         if pe_ratio is not None:
             companies[j].append(round(pe_ratio, 2))
         else:
-            companies[j].append(0)
+            import yfinance as yfl
+            symbol = yfl.Ticker(companies[j][0]).info
+            if symbol.keys().__contains__('trailingPE'):
+                trailing_pe = symbol["trailingPE"]
+                if trailing_pe is not None:
+                    companies[j].append(round(trailing_pe, 2))
+            else:
+                forward_pe = symbol["forwardPE"]
+                companies[j].append(round(forward_pe, 2))
 
         price = yf.get_current_price()
         if price is not None:
@@ -126,12 +135,32 @@ def update_data():
 if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
 
-    # companies = [['AAPL'], ['TSM'], ['BRK-B']]
+    companies = [['AAPL'], ['GE'], ['XOM']]
+    import yfinance as yfl
+    for j in range(len(companies)):
+        symbol = yfl.Ticker(companies[j][0]).info
+        # @todo update function get_data_yf
+        # marketCap
+        # netIncomeToCommon
+        # currentPrice
+        # ebitda
+        # totalDebt
+        # trailingPegRatio
+        # returnOnEquity
+        # returnOnAssets
+        print(symbol)
+        if symbol.keys().__contains__('trailingPE'):
+            trailing_pe = symbol["trailingPE"]
+            if trailing_pe is not None:
+                companies[j].append(round(trailing_pe, 2))
+        else:
+            forward_pe = symbol["forwardPE"]
+            companies[j].append(round(forward_pe, 2))
     # get_data_yf()
     # count_number_of_stocks(10000)
     # print(companies)
 
-    update_data()
+    # update_data()
     # read_csv_results()
 
     end_timer = get_current_time_milliseconds()
