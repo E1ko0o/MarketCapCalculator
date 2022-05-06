@@ -1,60 +1,40 @@
 Symbol,Market Cap,P/E Ratio,Current/last price in USD,Number of stocks,Industry-Sector
-AAPL,2687066963968,27.05,166.02,18,Consumer Electronics-Technology
-GOOG,1610167353344,22.17,2451.5,0,Internet Content & Information-Communication Services
-BRK-B,722665865216,0.01,326.8,2,Insurance—Diversified-Financial Services
-FB,604618948608,16.91,223.41,3,Internet Content & Information-Communication Services
-TSM,497784946688,22.27,95.99,5,Semiconductors-Technology
-UNH,476629270528,28.08,507.62,1,Healthcare Plans-Healthcare
-XOM,390704332800,15.6,91.7,4,Oil & Gas Integrated-Energy
-PG,380803350528,28.76,157.36,2,Household & Personal Products-Consumer Defensive
-BAC,316069150720,11.56,38.62,9,Banks Diversified-Financial Services
-BABA,280278990848,28.04,101.41,3,Internet Retail-Consumer Cyclical
-PFE,278735126528,14.18,49.66,6,Drug Manufacturers General-Healthcare
-TM,240913580032,10.28,174.85,1,Auto Manufacturers-Consumer Cyclical
-PEP,240387522560,29.62,173.86,1,Beverages—Non-Alcoholic-Consumer Defensive
-CSCO,217544327168,19.17,51.58,4,Communication Equipment-Technology
-ABT,204591153152,28.71,115.7,2,Medical Devices-Healthcare
-VZ,203045650432,9.09,48.37,4,Telecom Services-Communication Services
-ORCL,200844541952,21.23,75.21,3,Software Infrastructure-Technology
-CMCSA,190158454784,13.39,41.62,5,Entertainment-Communication Services
-MCD,190039359488,26.22,254.32,0,Restaurants-Consumer Cyclical
-INTC,189278191616,9.02,46.54,4,Semiconductors-Technology
-WFC,183332831232,10.97,45.98,4,Banks Diversified-Financial Services
-QCOM,166936002560,18.94,149.05,1,Semiconductors-Technology
-TXN,162752987136,22.63,176.23,1,Semiconductors-Technology
-PTR,150807625728,6.75,51.3,3,Oil & Gas Integrated-Energy
-TTE,136668446720,8.91,52.76,2,Oil & Gas Integrated-Energy
-CVS,132758437888,17.55,100.57,1,Healthcare Plans-Healthcare
-SNY,131084328960,18.84,52.49,2,Drug Manufacturers General-Healthcare
-IBM,123154366464,26.01,137.4,1,Information Technology Services-Technology
-SAP,120977727488,21.91,102.56,1,Software Application-Technology
-CAT,120408285184,23.81,222.59,0,Farm & Heavy Construction Machinery-Industrials
-TGT,113758404608,17.47,237.43,0,Discount Stores-Consumer Defensive
-SONY,109499228160,14.73,88.52,1,Consumer Electronics-Technology
-SIEGY,100920213504,15.1,62.89,1,Specialty Industrial Machinery-Industrials
-BTI,96975675392,11.4,42.13,2,Tobacco-Consumer Defensive
-ALIZF,93073932288,13.7,228,0,Insurance—Diversified-Financial Services
-VOW3.DE,92921454592,5.1,151.08,0,Auto Manufacturers-Consumer Cyclical
-NFLX,90366631936,18.39,204.01,0,Entertainment-Communication Services
-GE,88323399680,20.26,80.43,1,Specialty Industrial Machinery-Industrials
-MU,82466914304,11.39,73.62,1,Semiconductors-Technology
-LRCX,71233036288,17.1,505.92,0,Semiconductor Equipment & Materials-Technology
-MBG.DE,66950590464,3.01,62.58,1,Auto Manufacturers-Consumer Cyclical
-CL,64899375104,24.52,77,0,Household & Personal Products-Consumer Defensive
-ATVI,61719162880,23.51,79.24,0,Electronic Gaming & Multimedia-Communication Services
-FDX,55508357120,11.52,209.49,0,Integrated Freight & Logistics-Industrials
-KHC,53025411072,23.32,43.32,1,Packaged Foods-Consumer Defensive
-VMW,46099873792,22.98,109.85,0,Software Infrastructure-Technology
-TAK,46075846656,13.81,14.76,3,Drug Manufacturers Specialty & Generic-Healthcare
-ADDDF,38653280256,17.36,198.8,0,Footwear & Accessories-Consumer Cyclical
-BNTX,37475323904,3.65,151.84,0,Biotechnology-Healthcare
-COIN,34086283264,9.79,130.15,0,Software Application-Technology
-TSN,33486960640,11.06,92.23,0,Farm Products-Consumer Defensive
-ED,33075531776,27.7,93.5,0,Utilities Regulated Electric-Utilities
-BIIB,30862219264,20.56,210.1,0,Drug Manufacturers General-Healthcare
-DB,21990434816,10.44,10.64,2,Banks Regional-Financial Services
-FOX,20466786304,11.62,34.37,0,Broadcasting-Communication Services
-HAS,12987711488,28.72,94.15,0,Leisure-Consumer Cyclical
-AA,12715520000,15.72,67.96,0,Aluminum-Basic Materials
-NRG,9365092352,3.83,38.25,0,Independent Power Producers-Utilities
-TPR,9148505088,11.38,33.25,0,Luxury Goods-Consumer Cyclical
+AAPL,2572031361024,27.94,156.77,25,Consumer Electronics-Technology
+GOOG,1549746700288,22.49,2334.93,1,Internet Content & Information-Communication Services
+BRK-B,713610493952,0.01,318.68,3,Insurance—Diversified-Financial Services
+FB,579384967168,14.9,208.28,4,Internet Content & Information-Communication Services
+TSM,477897261056,23.07,92.15,8,Semiconductors-Technology
+PG,373785493504,28.23,154.46,3,Household & Personal Products-Consumer Defensive
+PFE,271943565312,13.84,48.45,8,Drug Manufacturers General-Healthcare
+PEP,235589730304,29.03,170.39,2,Beverages—Non-Alcoholic-Consumer Defensive
+CSCO,209235640320,18.44,49.61,6,Communication Equipment-Technology
+VZ,200820834304,8.99,47.84,6,Telecom Services-Communication Services
+ABT,199834468352,28.04,113.01,2,Medical Devices-Healthcare
+ORCL,194408759296,20.55,72.8,4,Software Infrastructure-Technology
+MCD,186004226048,25.66,248.92,1,Restaurants-Consumer Cyclical
+INTC,181388197888,8.65,44.6,6,Semiconductors-Technology
+QCOM,158636802048,18.0,141.64,1,Semiconductors-Technology
+TXN,157258006528,21.86,170.28,1,Semiconductors-Technology
+TTE,136862425088,13.34,52.49,4,Oil & Gas Integrated-Energy
+SAP,118001221632,18.28,99.82,1,Software Application-Technology
+CAT,116805607424,23.1,215.93,0,Farm & Heavy Construction Machinery-Industrials
+AMD,113358356480,28.95,93.87,1,Semiconductors-Technology
+TGT,110562648064,16.98,230.76,0,Discount Stores-Consumer Defensive
+NFLX,83416727552,16.98,188.32,0,Entertainment-Communication Services
+MU,79856918528,11.03,71.29,1,Semiconductors-Technology
+LRCX,67769380864,16.27,481.32,0,Semiconductor Equipment & Materials-Technology
+CL,64132378624,24.23,76.09,1,Household & Personal Products-Consumer Defensive
+ATVI,61345300480,23.36,78.76,1,Electronic Gaming & Multimedia-Communication Services
+MRNA,57582010368,8.51,142.02,0,Biotechnology-Healthcare
+FDX,54912176128,11.4,207.24,0,Integrated Freight & Logistics-Industrials
+ADDDF,37296619520,15.96,191.2,0,Footwear & Accessories-Consumer Cyclical
+BNTX,34418012160,4.5,141.92,0,Biotechnology-Healthcare
+TSN,33004062720,10.9,90.9,0,Farm Products-Consumer Defensive
+COIN,29922074624,8.59,114.25,0,Software Application-Technology
+BIIB,29551931392,19.69,201.18,0,Drug Manufacturers General-Healthcare
+FOX,20079722496,11.4,33.72,0,Broadcasting-Communication Services
+HAS,12702160896,28.09,92.08,0,Leisure-Consumer Cyclical
+AA,11873556480,14.68,63.46,0,Aluminum-Basic Materials
+NRG,9232878592,3.78,37.71,0,Independent Power Producers-Utilities
+TPR,8661501952,10.77,31.48,0,Luxury Goods-Consumer Cyclical
+MOMO,1113102080,3.73,5.4,0,Internet Content & Information-Communication Services
