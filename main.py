@@ -54,10 +54,11 @@ def read_csv_results():
 
 def write_output():
     with open('results.csv', 'w') as f:
-        f.write('Symbol,Market Cap,P/E Ratio,Current/last price in USD,Number of stocks,Industry-Sector\n')
+        f.write('Symbol,Market Cap,P/E Ratio,'
+                'Current/last price in USD,Number of stocks,Percentage,Industry-Sector\n')
         for j in range(len(companies)):
             f.write(f'{companies[j][0]},{companies[j][2]},{companies[j][3]},'
-                    f'{companies[j][4]},{companies[j][5]},{companies[j][1]}\n')
+                    f'{companies[j][4]},{companies[j][5]},{companies[j][6]},{companies[j][1]}\n')
 
 
 def sort_by_cap():
@@ -72,6 +73,52 @@ def get_data_yf():
         if symbol.keys().__contains__('netIncomeToCommon'):
             if symbol.get('netIncomeToCommon') < 0:
                 print('Skip due to negative net income: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+
+        if symbol.keys().__contains__('ebitda') and symbol['ebitda'] is not None:
+            if symbol['ebitda'] < 1_000_000_000:  # @todo research
+                print('Skip due to low ebitda: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+
+        if symbol.keys().__contains__('priceToBook') and symbol['priceToBook'] is not None:
+            if symbol['priceToBook'] > 50:  # @todo research
+                print('Skip due to high p/b: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+
+        if symbol.keys().__contains__('totalDebt') and symbol['totalDebt'] is not None:
+            if symbol['totalDebt'] > 1_000_000_000_000:  # @todo research
+                print('Skip due to high total debt: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+
+        if symbol.keys().__contains__('priceToSalesTrailing12Months') \
+                and symbol['priceToSalesTrailing12Months'] is not None:
+            if symbol['priceToSalesTrailing12Months'] > 10:
+                print('Skip due to high p/s: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+
+        if symbol.keys().__contains__('trailingEps') \
+                and symbol['trailingEps'] is not None \
+                and symbol.keys().__contains__('forwardEps') \
+                and symbol['forwardEps'] is not None:
+            if symbol['trailingEps'] < 1 or symbol['forwardEps'] < 1:
+                print('Skip due to low eps: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+
+        if symbol.keys().__contains__('returnOnEquity') and symbol['returnOnEquity'] is not None:
+            if symbol['returnOnEquity'] < 0.1:
+                print('Skip due to low return on equity: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+
+        if symbol.keys().__contains__('returnOnAssets') and symbol['returnOnAssets'] is not None:
+            if symbol['returnOnAssets'] < 0.05:
+                print('Skip due to low return on assets: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
@@ -104,85 +151,15 @@ def get_data_yf():
         if symbol.keys().__contains__('currentPrice'):
             companies[j].append(symbol['currentPrice'])
 
-        if symbol.keys().__contains__('ebitda') and symbol['ebitda'] is not None:
-            if symbol['ebitda'] < 1_000_000_000:
-                print('Skip due to low ebitda: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
-
-        if symbol.keys().__contains__('totalDebt') and symbol['totalDebt'] is not None:
-            if symbol['totalDebt'] > 1_000_000_000_000:  # decrease
-                print('Skip due to high total debt: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
-
-        if symbol.keys().__contains__('trailingPegRatio') and symbol['trailingPegRatio'] is not None:
-            if symbol['trailingPegRatio'] > 4:
-                print('Skip due to high peg ratio: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
-
-        if symbol.keys().__contains__('returnOnEquity') and symbol['returnOnEquity'] is not None:
-            if symbol['returnOnEquity'] < 0.1:  # 0.08
-                print('Skip due to low return on equity: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
-
-        if symbol.keys().__contains__('returnOnAssets') and symbol['returnOnAssets'] is not None:
-            if symbol['returnOnAssets'] < 0.05:  # 0.04
-                print('Skip due to low return on assets: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
-
-        # @todo update function get_data_yf
-        # netIncomeToCommon
-        # marketCap
-        # currentPrice
-        # ebitda
-        # totalDebt
-        # trailingPegRatio
-        # returnOnEquity
-        # returnOnAssets
-
         # from yahoofinancials import YahooFinancials
         # yf = YahooFinancials(companies[j][0])
-
         # net_income = yf.get_net_income()
-        # if net_income < 0:
-        #     print('Skip and remove: ' + companies[j][0])
-        #     companies.remove(companies[j])
-        #     continue
-
-        # market_cap = yf.get_market_cap()
-        # if market_cap is not None:
-        #     companies[j].append(market_cap)
-        # else:
-        #     companies[j].append(0)
-
-        # pe_ratio = yf.get_pe_ratio()
-        # if pe_ratio is not None:
-        #     companies[j].append(round(pe_ratio, 2))
-        # else:
-        #     import yfinance as yfl
-        #     symbol = yfl.Ticker(companies[j][0]).info
-        #     if symbol.keys().__contains__('trailingPE'):
-        #         trailing_pe = symbol["trailingPE"]
-        #         if trailing_pe is not None:
-        #             companies[j].append(round(trailing_pe, 2))
-        #     else:
-        #         forward_pe = symbol["forwardPE"]
-        #         companies[j].append(round(forward_pe, 2))
-
-        # price = yf.get_current_price()
-        # if price is not None:
-        #     companies[j].append(round(price, 2))
-        # else:
-        #     companies[j].append(0)
         print(companies[j])
         j += 1
 
 
 def count_number_of_stocks(amount_in_usd: int):
+    # @todo refactor using not market cap but number of companies
     sum_cap = 0
     for i in range(len(companies)):
         sum_cap += companies[i][2]
@@ -191,31 +168,25 @@ def count_number_of_stocks(amount_in_usd: int):
         amount_for_company = round(amount_in_usd * percentage, 5)
         number_of_stocks = float(amount_for_company) // float(companies[i][4])
         companies[i].append(int(number_of_stocks))
+        companies[i].append(percentage)
 
 
 def update_data():
     read_csv_and_fill_data()
     get_data_yf()
     sort_by_cap()
-    count_number_of_stocks(15000)
+    count_number_of_stocks(16000)
     write_output()
 
 
 if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
 
-    # companies = [['AAPL'], ['GE'], ['XOM']]
+    # companies = [['AAPL'], ['GE'], ['XOM'], ['BABA'], ['TSLA'], ['SPCE']]
     # import yfinance as yfl
     # for j in range(len(companies)):
     #     symbol = yfl.Ticker(companies[j][0]).info
     #     print(symbol)
-    #     if symbol.keys().__contains__('trailingPE'):
-    #         trailing_pe = symbol["trailingPE"]
-    #         if trailing_pe is not None:
-    #             companies[j].append(round(trailing_pe, 2))
-    #     else:
-    #         forward_pe = symbol["forwardPE"]
-    #         companies[j].append(round(forward_pe, 2))
     # get_data_yf()
     # count_number_of_stocks(10000)
     # print(companies)
