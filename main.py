@@ -1,7 +1,5 @@
-import time
-
-
 def get_current_time_milliseconds():
+    import time
     return round(time.time() * 1000)
 
 
@@ -55,13 +53,13 @@ def read_csv_results():
 def write_output():
     with open('results.csv', 'w') as f:
         f.write('Symbol,Market Cap,P/E Ratio,'
-                'Current/last price in USD,Number of stocks,Percentage,Industry-Sector\n')
+                'Current/last price in USD,Number of shares,Percentage,Industry-Sector\n')
         for j in range(len(companies)):
             f.write(f'{companies[j][0]},{companies[j][2]},{companies[j][3]},'
                     f'{companies[j][4]},{companies[j][5]},{companies[j][6]},{companies[j][1]}\n')
 
 
-def sort_by_cap():
+def sort_by_cap():  # @todo sort by symbol and sector
     companies.sort(key=lambda x: x[2], reverse=True)
 
 
@@ -71,7 +69,7 @@ def get_data_yf():
     while j < len(companies):
         symbol = yfl.Ticker(companies[j][0]).info
         if symbol.keys().__contains__('netIncomeToCommon'):
-            if symbol.get('netIncomeToCommon') < 0:
+            if symbol.get('netIncomeToCommon') < 0:  # @todo get out from functions 0 to 'net_income_target' and others
                 print('Skip due to negative net income: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
@@ -151,23 +149,28 @@ def get_data_yf():
         if symbol.keys().__contains__('currentPrice'):
             companies[j].append(symbol['currentPrice'])
 
-        # from yahoofinancials import YahooFinancials
-        # yf = YahooFinancials(companies[j][0])
-        # net_income = yf.get_net_income()
         print(companies[j])
         j += 1
 
 
-def count_number_of_stocks(amount_in_usd: int):
-    # @todo refactor using not market cap but number of companies
+def count_number_of_shares_using_number_of_companies(amount_in_usd: int):
+    percentage = round(1 / len(companies), 5)
+    amount_for_company = round(amount_in_usd * percentage, 5)
+    for i in range(len(companies)):
+        number_of_shares = float(amount_for_company) // float(companies[i][4])
+        companies[i].append(int(number_of_shares))
+        companies[i].append(percentage)
+
+
+def count_number_of_shares_using_market_cap(amount_in_usd: int):
     sum_cap = 0
     for i in range(len(companies)):
         sum_cap += companies[i][2]
     for i in range(len(companies)):
         percentage = round((int(companies[i][2]) / sum_cap), 5)
         amount_for_company = round(amount_in_usd * percentage, 5)
-        number_of_stocks = float(amount_for_company) // float(companies[i][4])
-        companies[i].append(int(number_of_stocks))
+        number_of_shares = float(amount_for_company) // float(companies[i][4])
+        companies[i].append(int(number_of_shares))
         companies[i].append(percentage)
 
 
@@ -175,20 +178,22 @@ def update_data():
     read_csv_and_fill_data()
     get_data_yf()
     sort_by_cap()
-    count_number_of_stocks(16000)
+    # count_number_of_shares_using_market_cap(16000)
+    count_number_of_shares_using_number_of_companies(16000)
     write_output()
 
 
 if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
 
-    # companies = [['AAPL'], ['GE'], ['XOM'], ['BABA'], ['TSLA'], ['SPCE']]
+    # companies = [['AAPL'], ['GE'], ['XOM'], ['BABA'], ['TSLA'], ['SPCE'], ['GOOG'], ['BRK-B']]
+    # get_data_yf()
+    # count_number_of_shares_using_number_of_companies(16000)
+    # write_output()
     # import yfinance as yfl
     # for j in range(len(companies)):
     #     symbol = yfl.Ticker(companies[j][0]).info
     #     print(symbol)
-    # get_data_yf()
-    # count_number_of_stocks(10000)
     # print(companies)
 
     update_data()
