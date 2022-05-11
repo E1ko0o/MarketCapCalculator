@@ -1,39 +1,39 @@
-Symbol,Market Cap,P/E Ratio,Current/last price in USD,Number of shares,Percentage,Industry-Sector
-AAPL,2580398473216,28.04,157.28,2,0.02632,Consumer Electronics-Technology
-GOOG,1535324061696,22.28,2313.2,0,0.02632,Internet Content & Information-Communication Services
-BRK-B,714058366976,0.01,318.88,1,0.02632,Insurance—Diversified-Financial Services
-FB,566839279616,14.58,203.77,2,0.02632,Internet Content & Information-Communication Services
-TSM,475200487424,22.94,91.63,4,0.02632,Semiconductors-Technology
-PG,377512198144,28.51,156,2,0.02632,Household & Personal Products-Consumer Defensive
-PFE,275255164928,14.01,49.04,8,0.02632,Drug Manufacturers General-Healthcare
-PEP,235617386496,29.03,170.41,2,0.02632,Beverages—Non-Alcoholic-Consumer Defensive
-CSCO,208054714368,18.34,49.33,8,0.02632,Communication Equipment-Technology
-VZ,202625875968,9.07,48.27,8,0.02632,Telecom Services-Communication Services
-ABT,198525911040,27.86,112.27,3,0.02632,Medical Devices-Healthcare
-ORCL,193580908544,20.46,72.49,5,0.02632,Software Infrastructure-Technology
-MCD,187394097152,25.85,250.78,1,0.02632,Restaurants-Consumer Cyclical
-INTC,180168097792,8.59,44.3,9,0.02632,Semiconductors-Technology
-QCOM,157449601024,17.86,140.58,2,0.02632,Semiconductors-Technology
-TXN,154644430848,21.5,167.45,2,0.02632,Semiconductors-Technology
-TTE,140121669632,13.65,53.74,7,0.02632,Oil & Gas Integrated-Energy
-CAT,116113203200,22.96,214.65,1,0.02632,Farm & Heavy Construction Machinery-Industrials
-AMD,115133530112,29.41,95.34,4,0.02632,Semiconductors-Technology
-SAP,113650941952,17.61,96.14,4,0.02632,Software Application-Technology
-TGT,107903516672,16.58,225.21,1,0.02632,Discount Stores-Consumer Defensive
-NFLX,80161021952,16.32,180.97,2,0.02632,Entertainment-Communication Services
-MU,78803959808,10.89,70.35,5,0.02632,Semiconductors-Technology
-LRCX,67334311936,16.16,478.23,0,0.02632,Semiconductor Equipment & Materials-Technology
-ATVI,60628717568,23.09,77.84,5,0.02632,Electronic Gaming & Multimedia-Communication Services
-FDX,55699132416,11.56,210.21,2,0.02632,Integrated Freight & Logistics-Industrials
-MRNA,54492475392,8.05,134.4,3,0.02632,Biotechnology-Healthcare
-ADDDF,36857720832,15.77,188.95,2,0.02632,Footwear & Accessories-Consumer Cyclical
-BNTX,33023539200,4.32,136.17,3,0.02632,Biotechnology-Healthcare
-TSN,32975015936,10.89,90.82,4,0.02632,Farm Products-Consumer Defensive
-BIIB,28439951360,18.95,193.61,2,0.02632,Drug Manufacturers General-Healthcare
-COIN,27169505280,7.8,103.74,4,0.02632,Software Application-Technology
-FOX,19091218432,10.84,32.06,13,0.02632,Broadcasting-Communication Services
-HAS,12680088576,28.04,91.92,4,0.02632,Leisure-Consumer Cyclical
-AA,11420768256,14.12,61.04,6,0.02632,Aluminum-Basic Materials
-NRG,10136335360,4.15,41.4,10,0.02632,Independent Power Producers-Utilities
-TPR,8347838976,10.38,30.34,13,0.02632,Luxury Goods-Consumer Cyclical
-MOMO,1067753344,3.58,5.18,81,0.02632,Internet Content & Information-Communication Services
+Symbol,Sector,Industry,Current/last price in USD,Number of shares
+NRG,Utilities,Independent Power Producers,42.1459,9
+SAP,Technology,Software Application,96.83,4
+TSM,Technology,Semiconductors,88.82,4
+AAPL,Technology,Consumer Electronics,154.51,2
+CSCO,Technology,Communication Equipment,49.55,8
+ORCL,Technology,Software Infrastructure,72.53,5
+INTC,Technology,Semiconductors,43.95,9
+QCOM,Technology,Semiconductors,135.165,3
+TXN,Technology,Semiconductors,166.95,2
+AMD,Technology,Semiconductors,88.27,4
+MU,Technology,Semiconductors,68.57,6
+LRCX,Technology,Semiconductor Equipment & Materials,455.82,0
+COIN,Technology,Software Application,56.6697,7
+CAT,Industrials,Farm & Heavy Construction Machinery,206.56,2
+FDX,Industrials,Integrated Freight & Logistics,207.405,2
+BNTX,Healthcare,Biotechnology,144.43,2
+PFE,Healthcare,Drug Manufacturers General,49.49,8
+ABT,Healthcare,Medical Devices,106.75,3
+MRNA,Healthcare,Biotechnology,128.22,3
+BIIB,Healthcare,Drug Manufacturers General,193.22,2
+BRK-B,Financial Services,Insurance—Diversified,312.53,1
+TTE,Energy,Oil & Gas Integrated,51.11,8
+PG,Consumer Defensive,Household & Personal Products,154.79,2
+PEP,Consumer Defensive,Beverages—Non-Alcoholic,171.49,2
+TGT,Consumer Defensive,Discount Stores,218.865,1
+TSN,Consumer Defensive,Farm Products,91.86,4
+ADDDF,Consumer Cyclical,Footwear & Accessories,182.45,2
+NKE,Consumer Cyclical,Footwear & Accessories,109.49,3
+MCD,Consumer Cyclical,Restaurants,245.57,1
+HAS,Consumer Cyclical,Leisure,89.02,4
+TPR,Consumer Cyclical,Luxury Goods,27.7535,15
+GOOG,Communication Services,Internet Content & Information,2291.69,0
+FB,Communication Services,Internet Content & Information,197.65,2
+VZ,Communication Services,Telecom Services,48.13,8
+NFLX,Communication Services,Entertainment,175.675,2
+ATVI,Communication Services,Electronic Gaming & Multimedia,76.59,5
+FOX,Communication Services,Broadcasting,30.18,13
+AA,Basic Materials,Aluminum,56.7436,7

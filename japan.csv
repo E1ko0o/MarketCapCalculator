@@ -1,4 +1,4 @@
-Rank,Name,Symbol,Industry-Sector
-1,Toyota,TM,Auto Manufacturers-Consumer Cyclical
-2,Sony,SONY,Consumer Electronics-Technology
-3,Takeda Pharmaceutical,TAK,Drug Manufacturers Specialty & Generic-Healthcare
+Name,Symbol,Sector,Industry
+Toyota,TM,Consumer Cyclical,Auto Manufacturers
+Sony,SONY,Technology,Consumer Electronics
+Takeda Pharmaceutical,TAK,Healthcare,Drug Manufacturers Specialty & Generic

@@ -1,69 +1,69 @@
-Rank,Name,Symbol,Industry-Sector
-1,Apple,AAPL,Consumer Electronics-Technology
-2,Microsoft,MSFT,Software—Infrastructure-Technology
-3,Alphabet (Google),GOOG,Internet Content & Information-Communication Services
-4,Amazon,AMZN,Internet Retail-Consumer Cyclical
-5,Tesla,TSLA,Auto Manufacturers-Consumer Cyclical
-6,Berkshire Hathaway,BRK-B,Insurance—Diversified-Financial Services
-7,Meta (Facebook),FB,Internet Content & Information-Communication Services
-8,NVIDIA,NVDA,Semiconductors-Technology
-9,UnitedHealth,UNH,Healthcare Plans-Healthcare
-12,Walmart,WMT,Discount Stores-Consumer Defensive
-13,Procter & Gamble,PG,Household & Personal Products-Consumer Defensive
-15,Exxon Mobil,XOM,Oil & Gas Integrated-Energy
-18,Chevron,CVX,Oil & Gas Integrated-Energy
-19,Bank of America,BAC,Banks Diversified-Financial Services
-20,Coca-Cola,KO,Beverages—Non-Alcoholic-Consumer Defensive
-21,Pfizer,PFE,Drug Manufacturers General-Healthcare
-23,AbbVie,ABBV,Drug Manufacturers General-Healthcare
-25,Pepsico,PEP,Beverages—Non-Alcoholic-Consumer Defensive
-26,Broadcom,AVGO,Semiconductors-Technology
-27,Merck,MRK,Drug Manufacturers General-Healthcare
-29,Walt Disney,DIS,Entertainment-Communication Services
-30,Cisco,CSCO,Communication Equipment-Technology
-31,Abbott Laboratories,ABT,Medical Devices-Healthcare
-32,Oracle,ORCL,Software Infrastructure-Technology
-33,Verizon,VZ,Telecom Services-Communication Services
-34,Nike,NKE,Footwear & Accessories-Consumer Cyclical
-35,Adobe,ADBE,Software Infrastructure-Technology
-36,McDonald,MCD,Restaurants-Consumer Cyclical
-38,Comcast,CMCSA,Entertainment-Communication Services
-40,Intel,INTC,Semiconductors-Technology
-41,Wells Fargo,WFC,Banks Diversified-Financial Services
-42,QUALCOMM,QCOM,Semiconductors-Technology
-44,T-Mobile US,TMUS,Telecom Services-Communication Services
-45,Texas Instruments,TXN,Semiconductors-Technology
-51,AMD,AMD,Semiconductors-Technology
-53,AT&T,T,Telecom Services-Communication Services
-59,CVS Health,CVS,Healthcare Plans-Healthcare
-65,IBM,IBM,Information Technology Services-Technology
-69,Caterpillar,CAT,Farm & Heavy Construction Machinery-Industrials
-70,Target,TGT,Discount Stores-Consumer Defensive
-85,Netflix,NFLX,Entertainment-Communication Services
-87,Intuitive Surgical,ISRG,Medical Instruments & Supplies-Healthcare
-91,General Electric,GE,Specialty Industrial Machinery-Industrials
-99,Micron Technology,MU,Semiconductors-Technology
-120,Lam Research,LRCX,Semiconductor Equipment & Materials-Technology
-124,Colgate-Palmolive,CL,Household & Personal Products-Consumer Defensive
-131,Snowflake,SNOW,Software Application-Technology
-134,Activision Blizzard,ATVI,Electronic Gaming & Multimedia-Communication Services
-137,Moderna,MRNA,Biotechnology-Healthcare
-150,FedEx,FDX,Integrated Freight & Logistics-Industrials
-151,Kraft Heinz,KHC,Packaged Foods-Consumer Defensive
-179,Vmware,VMW,Software Infrastructure-Technology
-201,Autodesk,ADSK,Software Application-Technology
-239,Tyson Foods,TSN,Farm Products-Consumer Defensive
-241,Electronic Arts,EA,Electronic Gaming & Multimedia-Communication Services
-247,Consolidated Edison,ED,Utilities Regulated Electric-Utilities
-257,Coinbase,COIN,Software Application-Technology
-267,Biogen,BIIB,Drug Manufacturers General-Healthcare
-291,Rivian,RIVN,Auto Manufacturers-Consumer Cyclical
-383,Fox Corporation,FOX,Broadcasting-Communication Services
-390,Roblox,RBLX,Electronic Gaming & Multimedia-Communication Services
-519,Alcoa,AA,Aluminum-Basic Materials
-523,Roku,ROKU,Entertainment-Communication Services
-537,Hasbro,HAS,Leisure-Consumer Cyclical
-640,NRG Energy,NRG,Independent Power Producers-Utilities
-642,Tapestry,TPR,Luxury Goods-Consumer Cyclical
-1195,Livent,LTHM,Specialty Chemicals-Basic Materials
-1303,SunPower,SPWR,Solar-Technology
+Name,Symbol,Sector,Industry
+Apple,AAPL,Technology,Consumer Electronics
+Microsoft,MSFT,Technology,Software—Infrastructure
+Alphabet (Google),GOOG,Communication Services,Internet Content & Information
+Amazon,AMZN,Consumer Cyclical,Internet Retail
+Tesla,TSLA,Consumer Cyclical,Auto Manufacturers
+Berkshire Hathaway,BRK-B,Financial Services,Insurance—Diversified
+Meta (Facebook),FB,Communication Services,Internet Content & Information
+NVIDIA,NVDA,Technology,Semiconductors
+UnitedHealth,UNH,Healthcare,Healthcare Plans
+Walmart,WMT,Consumer Defensive,Discount Stores
+Procter & Gamble,PG,Consumer Defensive,Household & Personal Products
+Exxon Mobil,XOM,Energy,Oil & Gas Integrated
+Chevron,CVX,Energy,Oil & Gas Integrated
+Bank of America,BAC,Financial Services,Banks Diversified
+Coca-Cola,KO,Consumer Defensive,Beverages—Non-Alcoholic
+Pfizer,PFE,Healthcare,Drug Manufacturers General
+AbbVie,ABBV,Healthcare,Drug Manufacturers General
+Pepsico,PEP,Consumer Defensive,Beverages—Non-Alcoholic
+Broadcom,AVGO,Technology,Semiconductors
+Merck,MRK,Healthcare,Drug Manufacturers General
+Walt Disney,DIS,Communication Services,Entertainment
+Cisco,CSCO,Technology,Communication Equipment
+Abbott Laboratories,ABT,Healthcare,Medical Devices
+Oracle,ORCL,Technology,Software Infrastructure
+Verizon,VZ,Communication Services,Telecom Services
+Nike,NKE,Consumer Cyclical,Footwear & Accessories
+Adobe,ADBE,Technology,Software Infrastructure
+McDonald,MCD,Consumer Cyclical,Restaurants
+Comcast,CMCSA,Communication Services,Entertainment
+Intel,INTC,Technology,Semiconductors
+Wells Fargo,WFC,Financial Services,Banks Diversified
+QUALCOMM,QCOM,Technology,Semiconductors
+T-Mobile US,TMUS,Communication Services,Telecom Services
+Texas Instruments,TXN,Technology,Semiconductors
+AMD,AMD,Technology,Semiconductors
+AT&T,T,Communication Services,Telecom Services
+CVS Health,CVS,Healthcare,Healthcare Plans
+IBM,IBM,Technology,Information Technology Services
+Caterpillar,CAT,Industrials,Farm & Heavy Construction Machinery
+Target,TGT,Consumer Defensive,Discount Stores
+Netflix,NFLX,Communication Services,Entertainment
+Intuitive Surgical,ISRG,Healthcare,Medical Instruments & Supplies
+General Electric,GE,Industrials,Specialty Industrial Machinery
+Micron Technology,MU,Technology,Semiconductors
+Lam Research,LRCX,Technology,Semiconductor Equipment & Materials
+Colgate-Palmolive,CL,Consumer Defensive,Household & Personal Products
+Snowflake,SNOW,Technology,Software Application
+Activision Blizzard,ATVI,Communication Services,Electronic Gaming & Multimedia
+Moderna,MRNA,Healthcare,Biotechnology
+FedEx,FDX,Industrials,Integrated Freight & Logistics
+Kraft Heinz,KHC,Consumer Defensive,Packaged Foods
+Vmware,VMW,Technology,Software Infrastructure
+Autodesk,ADSK,Technology,Software Application
+Tyson Foods,TSN,Consumer Defensive,Farm Products
+Electronic Arts,EA,Communication Services,Electronic Gaming & Multimedia
+Consolidated Edison,ED,Utilities,Utilities Regulated Electric
+Coinbase,COIN,Technology,Software Application
+Biogen,BIIB,Healthcare,Drug Manufacturers General
+Rivian,RIVN,Consumer Cyclical,Auto Manufacturers
+Fox Corporation,FOX,Communication Services,Broadcasting
+Roblox,RBLX,Communication Services,Electronic Gaming & Multimedia
+Alcoa,AA,Basic Materials,Aluminum
+Roku,ROKU,Communication Services,Entertainment
+Hasbro,HAS,Consumer Cyclical,Leisure
+NRG Energy,NRG,Utilities,Independent Power Producers
+Tapestry,TPR,Consumer Cyclical,Luxury Goods
+Livent,LTHM,Basic Materials,Specialty Chemicals
+SunPower,SPWR,Technology,Solar

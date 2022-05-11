@@ -1,4 +1,4 @@
-Rank,Name,Symbol,Industry-Sector
-1,Astrazeneca,AZN,Drug Manufacturers General-Healthcare
-2,British American Tobacco,BTI,Tobacco-Consumer Defensive
-3,Arrival,ARVL,Auto Manufacturers-Consumer Cyclical
+Name,Symbol,Sector,Industry
+Astrazeneca,AZN,Healthcare,Drug Manufacturers General
+British American Tobacco,BTI,Consumer Defensive,Tobacco
+Arrival,ARVL,Consumer Cyclical,Auto Manufacturers

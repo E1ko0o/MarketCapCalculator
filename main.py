@@ -4,6 +4,16 @@ def get_current_time_milliseconds():
 
 
 companies = []
+target_net_income = 0
+target_ebitda = 1_000_000_000  # @todo research
+target_pb = 50  # @todo research
+target_total_debt = 1_000_000_000_000  # @todo research
+target_ps = 10
+target_eps = 1
+target_roe = 0.1
+target_roa = 0.05
+target_pe = 30
+target_market_cap = 5_000_000_000
 
 
 def read_csv_and_fill_data():
@@ -23,44 +33,58 @@ def read_csv_and_fill_data():
                         if line.__contains__('Symbol'):
                             continue
                         companies.append([])
-                        _, _1, symbol, sector = list(line.split(','))
-                        sector = sector.replace('\n', '')
+                        _, symbol, sector, industry = list(line.split(','))
+                        industry = industry.replace('\n', '')
                         companies[index].append(symbol)
                         companies[index].append(sector)
+                        companies[index].append(industry)
                         index += 1
 
 
 def read_csv_results():
-    # @todo refactor
     index = 0
     with open('results.csv', 'r', encoding='utf8') as f:
         for line in f:
             if line.__contains__('Symbol'):
                 continue
             companies.append([])
-            symbol, cap, pe, price, sector = list(line.split(','))
+            symbol, cap, pe, price, nums, perc, sector = list(line.split(','))
             cap = int(cap)
-            pe = float(pe.replace('\n', ''))
-            companies[index].append(symbol)
-            companies[index].append(cap)
-            companies[index].append(pe)
-            companies[index].append(price)
-            companies[index].append(sector)
-            del symbol, cap, pe, price, sector
+            pe = float(pe)
+            price = float(price)
+            nums = int(nums)
+            perc = float(perc)
+            sector = sector.replace('\n', '')
+            companies[index].append(symbol)\
+                .append(sector)\
+                .append(cap)\
+                .append(pe)\
+                .append(price)\
+                .append(nums)\
+                .append(perc)
+            del symbol, cap, pe, price, sector, nums, perc
             index += 1
 
 
 def write_output():
     with open('results.csv', 'w') as f:
-        f.write('Symbol,Market Cap,P/E Ratio,'
-                'Current/last price in USD,Number of shares,Percentage,Industry-Sector\n')
+        f.write('Symbol,Sector,Industry,Current/last price in USD,Number of shares\n')
+        # Sector include industry
         for j in range(len(companies)):
-            f.write(f'{companies[j][0]},{companies[j][2]},{companies[j][3]},'
-                    f'{companies[j][4]},{companies[j][5]},{companies[j][6]},{companies[j][1]}\n')
+            f.write(f'{companies[j][0]},{companies[j][1]},{companies[j][2]},'
+                    f'{companies[j][3]},{companies[j][4]}\n')
 
 
-def sort_by_cap():  # @todo sort by symbol and sector
-    companies.sort(key=lambda x: x[2], reverse=True)
+def sort_by_symbol():
+    companies.sort(key=lambda x: x[0], reverse=True)
+
+
+def sort_by_sector():
+    companies.sort(key=lambda x: x[1], reverse=False)
+
+
+def sort_by_industry():
+    companies.sort(key=lambda x: x[2], reverse=False)
 
 
 def get_data_yf():
@@ -69,32 +93,32 @@ def get_data_yf():
     while j < len(companies):
         symbol = yfl.Ticker(companies[j][0]).info
         if symbol.keys().__contains__('netIncomeToCommon'):
-            if symbol.get('netIncomeToCommon') < 0:  # @todo get out from functions 0 to 'net_income_target' and others
+            if symbol.get('netIncomeToCommon') < target_net_income:
                 print('Skip due to negative net income: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('ebitda') and symbol['ebitda'] is not None:
-            if symbol['ebitda'] < 1_000_000_000:  # @todo research
+            if symbol['ebitda'] < target_ebitda:
                 print('Skip due to low ebitda: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('priceToBook') and symbol['priceToBook'] is not None:
-            if symbol['priceToBook'] > 50:  # @todo research
+            if symbol['priceToBook'] > target_pb:
                 print('Skip due to high p/b: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('totalDebt') and symbol['totalDebt'] is not None:
-            if symbol['totalDebt'] > 1_000_000_000_000:  # @todo research
+            if symbol['totalDebt'] > target_total_debt:
                 print('Skip due to high total debt: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('priceToSalesTrailing12Months') \
                 and symbol['priceToSalesTrailing12Months'] is not None:
-            if symbol['priceToSalesTrailing12Months'] > 10:
+            if symbol['priceToSalesTrailing12Months'] > target_ps:
                 print('Skip due to high p/s: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
@@ -103,44 +127,39 @@ def get_data_yf():
                 and symbol['trailingEps'] is not None \
                 and symbol.keys().__contains__('forwardEps') \
                 and symbol['forwardEps'] is not None:
-            if symbol['trailingEps'] < 1 or symbol['forwardEps'] < 1:
+            if symbol['trailingEps'] < 1 or symbol['forwardEps'] < target_eps:
                 print('Skip due to low eps: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('returnOnEquity') and symbol['returnOnEquity'] is not None:
-            if symbol['returnOnEquity'] < 0.1:
+            if symbol['returnOnEquity'] < target_roe:
                 print('Skip due to low return on equity: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('returnOnAssets') and symbol['returnOnAssets'] is not None:
-            if symbol['returnOnAssets'] < 0.05:
+            if symbol['returnOnAssets'] < target_roa:
                 print('Skip due to low return on assets: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
-        if symbol.keys().__contains__('marketCap'):
-            companies[j].append(symbol['marketCap'])
+        if symbol.keys().__contains__('marketCap') and symbol['marketCap'] is not None:
+            if symbol['marketCap'] < target_market_cap:
+                print('Skip due to low market cap: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
 
-        if symbol.keys().__contains__('trailingPE'):
-            pe = symbol['trailingPE']
-            if pe is not None:
-                if pe > 30:
-                    print('Skip due to high p/e: ' + companies[j][0])
-                    companies.remove(companies[j])
-                    continue
-                companies[j].append(round(pe, 2))
-            del pe
-        elif symbol.keys().__contains__('forwardPE'):
-            pe = symbol['forwardPE']
-            if pe is not None:
-                if pe > 30:
-                    print('Skip due to high p/e: ' + companies[j][0])
-                    companies.remove(companies[j])
-                    continue
-                companies[j].append(round(pe, 2))
-            del pe
+        if symbol.keys().__contains__('trailingPE') and symbol['trailingPE'] is not None:
+            if symbol['trailingPE'] > target_pe:
+                print('Skip due to high p/e: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+        elif symbol.keys().__contains__('forwardPE') and symbol['forwardPE'] is not None:
+            if symbol['forwardPE'] > target_pe:
+                print('Skip due to high p/e: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
         else:
             print('Skip due to unavailable p/e: ' + companies[j][0])
             companies.remove(companies[j])
@@ -157,28 +176,14 @@ def count_number_of_shares_using_number_of_companies(amount_in_usd: int):
     percentage = round(1 / len(companies), 5)
     amount_for_company = round(amount_in_usd * percentage, 5)
     for i in range(len(companies)):
-        number_of_shares = float(amount_for_company) // float(companies[i][4])
+        number_of_shares = float(amount_for_company) // float(companies[i][3])
         companies[i].append(int(number_of_shares))
-        companies[i].append(percentage)
-
-
-def count_number_of_shares_using_market_cap(amount_in_usd: int):
-    sum_cap = 0
-    for i in range(len(companies)):
-        sum_cap += companies[i][2]
-    for i in range(len(companies)):
-        percentage = round((int(companies[i][2]) / sum_cap), 5)
-        amount_for_company = round(amount_in_usd * percentage, 5)
-        number_of_shares = float(amount_for_company) // float(companies[i][4])
-        companies[i].append(int(number_of_shares))
-        companies[i].append(percentage)
 
 
 def update_data():
     read_csv_and_fill_data()
     get_data_yf()
-    sort_by_cap()
-    # count_number_of_shares_using_market_cap(16000)
+    sort_by_sector()
     count_number_of_shares_using_number_of_companies(16000)
     write_output()
 
@@ -187,6 +192,7 @@ if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
 
     # companies = [['AAPL'], ['GE'], ['XOM'], ['BABA'], ['TSLA'], ['SPCE'], ['GOOG'], ['BRK-B']]
+    # companies = [['NRG']]
     # get_data_yf()
     # count_number_of_shares_using_number_of_companies(16000)
     # write_output()

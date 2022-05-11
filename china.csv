@@ -1,6 +1,6 @@
-Rank,Name,Symbol,Industry-Sector
-1,Alibaba,BABA,Internet Retail-Consumer Cyclical
-2,PetroChina,PTR,Oil & Gas Integrated-Energy
-3,Baidu,BIDU,Internet Content & Information-Communication Services
-4,Li Auto,LI,Auto Manufacturers-Consumer Cyclical
-5,Momo,MOMO,Internet Content & Information-Communication Services
+Name,Symbol,Sector,Industry
+Alibaba,BABA,Consumer Cyclical,Internet Retail
+PetroChina,PTR,Energy,Oil & Gas Integrated
+Baidu,BIDU,Communication Services,Internet Content & Information
+Li Auto,LI,Consumer Cyclical,Auto Manufacturers
+Momo,MOMO,Communication Services,Internet Content & Information
