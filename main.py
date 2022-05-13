@@ -5,9 +5,7 @@ def get_current_time_milliseconds():
 
 companies = []
 target_net_income = 0
-target_ebitda = 1_000_000_000  # @todo research
-target_pb = 50  # @todo research
-target_total_debt = 1_000_000_000_000  # @todo research
+target_pb = 3
 target_ps = 10
 target_eps = 1
 target_roe = 0.1
@@ -55,12 +53,12 @@ def read_csv_results():
             nums = int(nums)
             perc = float(perc)
             sector = sector.replace('\n', '')
-            companies[index].append(symbol)\
-                .append(sector)\
-                .append(cap)\
-                .append(pe)\
-                .append(price)\
-                .append(nums)\
+            companies[index].append(symbol) \
+                .append(sector) \
+                .append(cap) \
+                .append(pe) \
+                .append(price) \
+                .append(nums) \
                 .append(perc)
             del symbol, cap, pe, price, sector, nums, perc
             index += 1
@@ -93,26 +91,14 @@ def get_data_yf():
     while j < len(companies):
         symbol = yfl.Ticker(companies[j][0]).info
         if symbol.keys().__contains__('netIncomeToCommon'):
-            if symbol.get('netIncomeToCommon') < target_net_income:
+            if symbol['netIncomeToCommon'] < target_net_income:
                 print('Skip due to negative net income: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
-        if symbol.keys().__contains__('ebitda') and symbol['ebitda'] is not None:
-            if symbol['ebitda'] < target_ebitda:
-                print('Skip due to low ebitda: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
-
-        if symbol.keys().__contains__('priceToBook') and symbol['priceToBook'] is not None:
-            if symbol['priceToBook'] > target_pb:
-                print('Skip due to high p/b: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
-
         if symbol.keys().__contains__('totalDebt') and symbol['totalDebt'] is not None:
-            if symbol['totalDebt'] > target_total_debt:
-                print('Skip due to high total debt: ' + companies[j][0])
+            if symbol['netIncomeToCommon'] / symbol['totalDebt'] < 0.3:
+                print('Skip due to low coefficient net income/total debt: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
@@ -132,17 +118,18 @@ def get_data_yf():
                 companies.remove(companies[j])
                 continue
 
-        if symbol.keys().__contains__('returnOnEquity') and symbol['returnOnEquity'] is not None:
-            if symbol['returnOnEquity'] < target_roe:
-                print('Skip due to low return on equity: ' + companies[j][0])
+        if symbol.keys().__contains__('returnOnEquity') and symbol['returnOnEquity'] is not None and \
+                symbol.keys().__contains__('returnOnAssets') and symbol['returnOnAssets'] is not None:
+            if symbol['returnOnEquity'] < target_roe or symbol['returnOnAssets'] < target_roa:
+                print('Skip due to low return on equity/assets: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
-
-        if symbol.keys().__contains__('returnOnAssets') and symbol['returnOnAssets'] is not None:
-            if symbol['returnOnAssets'] < target_roa:
-                print('Skip due to low return on assets: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
+            elif (symbol['returnOnEquity'] < 2 * target_roe or symbol['returnOnAssets'] < 2 * target_roa) and \
+                    symbol.keys().__contains__('priceToBook') and symbol['priceToBook'] is not None:
+                if symbol['priceToBook'] > target_pb:
+                    print('Skip due to high p/b: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
 
         if symbol.keys().__contains__('marketCap') and symbol['marketCap'] is not None:
             if symbol['marketCap'] < target_market_cap:
@@ -192,7 +179,7 @@ if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
 
     # companies = [['AAPL'], ['GE'], ['XOM'], ['BABA'], ['TSLA'], ['SPCE'], ['GOOG'], ['BRK-B']]
-    # companies = [['NRG']]
+    # companies = [['TSM']]
     # get_data_yf()
     # count_number_of_shares_using_number_of_companies(16000)
     # write_output()

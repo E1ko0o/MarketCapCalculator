@@ -1,39 +1,18 @@
 Symbol,Sector,Industry,Current/last price in USD,Number of shares
-NRG,Utilities,Independent Power Producers,42.1459,9
-SAP,Technology,Software Application,96.83,4
-TSM,Technology,Semiconductors,88.82,4
-AAPL,Technology,Consumer Electronics,154.51,2
-CSCO,Technology,Communication Equipment,49.55,8
-ORCL,Technology,Software Infrastructure,72.53,5
-INTC,Technology,Semiconductors,43.95,9
-QCOM,Technology,Semiconductors,135.165,3
-TXN,Technology,Semiconductors,166.95,2
-AMD,Technology,Semiconductors,88.27,4
-MU,Technology,Semiconductors,68.57,6
-LRCX,Technology,Semiconductor Equipment & Materials,455.82,0
-COIN,Technology,Software Application,56.6697,7
-CAT,Industrials,Farm & Heavy Construction Machinery,206.56,2
-FDX,Industrials,Integrated Freight & Logistics,207.405,2
-BNTX,Healthcare,Biotechnology,144.43,2
-PFE,Healthcare,Drug Manufacturers General,49.49,8
-ABT,Healthcare,Medical Devices,106.75,3
-MRNA,Healthcare,Biotechnology,128.22,3
-BIIB,Healthcare,Drug Manufacturers General,193.22,2
-BRK-B,Financial Services,Insurance—Diversified,312.53,1
-TTE,Energy,Oil & Gas Integrated,51.11,8
-PG,Consumer Defensive,Household & Personal Products,154.79,2
-PEP,Consumer Defensive,Beverages—Non-Alcoholic,171.49,2
-TGT,Consumer Defensive,Discount Stores,218.865,1
-TSN,Consumer Defensive,Farm Products,91.86,4
-ADDDF,Consumer Cyclical,Footwear & Accessories,182.45,2
-NKE,Consumer Cyclical,Footwear & Accessories,109.49,3
-MCD,Consumer Cyclical,Restaurants,245.57,1
-HAS,Consumer Cyclical,Leisure,89.02,4
-TPR,Consumer Cyclical,Luxury Goods,27.7535,15
-GOOG,Communication Services,Internet Content & Information,2291.69,0
-FB,Communication Services,Internet Content & Information,197.65,2
-VZ,Communication Services,Telecom Services,48.13,8
-NFLX,Communication Services,Entertainment,175.675,2
-ATVI,Communication Services,Electronic Gaming & Multimedia,76.59,5
-FOX,Communication Services,Broadcasting,30.18,13
-AA,Basic Materials,Aluminum,56.7436,7
+GOOG,Communication Services,Internet Content & Information,2263.22,0
+FB,Communication Services,Internet Content & Information,191.24,4
+NKE,Consumer Cyclical,Footwear & Accessories,107.9,8
+TGT,Consumer Defensive,Discount Stores,217.27,4
+TSN,Consumer Defensive,Farm Products,89.54,10
+BRK-B,Financial Services,Insurance—Diversified,308.06,3
+BNTX,Healthcare,Biotechnology,158,5
+MRNA,Healthcare,Biotechnology,130.17,7
+TSM,Technology,Semiconductors,87.69,10
+AAPL,Technology,Consumer Electronics,142.56,6
+INTC,Technology,Semiconductors,42.84,21
+QCOM,Technology,Semiconductors,131.77,7
+TXN,Technology,Semiconductors,165.9,5
+AMD,Technology,Semiconductors,87.06,10
+MU,Technology,Semiconductors,67.71,13
+LRCX,Technology,Semiconductor Equipment & Materials,460.43,2
+COIN,Technology,Software Application,58.5,16
