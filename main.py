@@ -11,7 +11,10 @@ target_eps = 1
 target_roe = 0.1
 target_roa = 0.05
 target_pe = 30
-target_market_cap = 5_000_000_000
+target_market_cap = 1_000_000_000
+
+color_green_to_print = '\033[1;92m'
+color_red_to_print = '\033[1;91m'
 
 
 def read_csv_and_fill_data():
@@ -92,20 +95,20 @@ def get_data_yf():
         symbol = yfl.Ticker(companies[j][0]).info
         if symbol.keys().__contains__('netIncomeToCommon'):
             if symbol['netIncomeToCommon'] < target_net_income:
-                print('Skip due to negative net income: ' + companies[j][0])
+                print(color_red_to_print + 'Skip due to negative net income: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('totalDebt') and symbol['totalDebt'] is not None:
             if symbol['netIncomeToCommon'] / symbol['totalDebt'] < 0.3:
-                print('Skip due to low coefficient net income/total debt: ' + companies[j][0])
+                print(color_red_to_print + 'Skip due to low coefficient net income/total debt: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('priceToSalesTrailing12Months') \
                 and symbol['priceToSalesTrailing12Months'] is not None:
             if symbol['priceToSalesTrailing12Months'] > target_ps:
-                print('Skip due to high p/s: ' + companies[j][0])
+                print(color_red_to_print + 'Skip due to high p/s: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
@@ -114,48 +117,48 @@ def get_data_yf():
                 and symbol.keys().__contains__('forwardEps') \
                 and symbol['forwardEps'] is not None:
             if symbol['trailingEps'] < 1 or symbol['forwardEps'] < target_eps:
-                print('Skip due to low eps: ' + companies[j][0])
+                print(color_red_to_print + 'Skip due to low eps: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('returnOnEquity') and symbol['returnOnEquity'] is not None and \
                 symbol.keys().__contains__('returnOnAssets') and symbol['returnOnAssets'] is not None:
             if symbol['returnOnEquity'] < target_roe or symbol['returnOnAssets'] < target_roa:
-                print('Skip due to low return on equity/assets: ' + companies[j][0])
+                print(color_red_to_print + 'Skip due to low return on equity/assets: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
             elif (symbol['returnOnEquity'] < 2 * target_roe or symbol['returnOnAssets'] < 2 * target_roa) and \
                     symbol.keys().__contains__('priceToBook') and symbol['priceToBook'] is not None:
                 if symbol['priceToBook'] > target_pb:
-                    print('Skip due to high p/b: ' + companies[j][0])
+                    print(color_red_to_print + 'Skip due to high p/b: ' + companies[j][0])
                     companies.remove(companies[j])
                     continue
 
         if symbol.keys().__contains__('marketCap') and symbol['marketCap'] is not None:
             if symbol['marketCap'] < target_market_cap:
-                print('Skip due to low market cap: ' + companies[j][0])
+                print(color_red_to_print + 'Skip due to low market cap: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
         if symbol.keys().__contains__('trailingPE') and symbol['trailingPE'] is not None:
             if symbol['trailingPE'] > target_pe:
-                print('Skip due to high p/e: ' + companies[j][0])
+                print(color_red_to_print + 'Skip due to high p/e: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
         elif symbol.keys().__contains__('forwardPE') and symbol['forwardPE'] is not None:
             if symbol['forwardPE'] > target_pe:
-                print('Skip due to high p/e: ' + companies[j][0])
+                print(color_red_to_print + 'Skip due to high p/e: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
         else:
-            print('Skip due to unavailable p/e: ' + companies[j][0])
+            print(color_red_to_print + 'Skip due to unavailable p/e: ' + companies[j][0])
             companies.remove(companies[j])
             continue
 
         if symbol.keys().__contains__('currentPrice'):
             companies[j].append(symbol['currentPrice'])
 
-        print(companies[j])
+        print(color_green_to_print + str(companies[j]))
         j += 1
 
 
@@ -194,4 +197,4 @@ if __name__ == '__main__':
 
     end_timer = get_current_time_milliseconds()
     time_of_running = end_timer - start_timer
-    print('Time of running in milliseconds: ' + str(time_of_running))
+    print(color_green_to_print + 'Time of running in milliseconds: ' + str(time_of_running))

@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\aus.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\china.csv">
           <value>
             <Attribute>
@@ -60,6 +67,13 @@
           </value>
         </entry>
         <entry key="\us.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\us_all.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
