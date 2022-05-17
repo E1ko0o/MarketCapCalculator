@@ -1,3 +1,6 @@
+import os
+
+
 def get_current_time_milliseconds():
     import time
     return round(time.time() * 1000)
@@ -12,63 +15,78 @@ target_roe = 0.1
 target_roa = 0.05
 target_pe = 30
 target_market_cap = 1_000_000_000
+coefficient_net_income_divided_total_debt = 0.25
 
 color_green_to_print = '\033[1;92m'
 color_red_to_print = '\033[1;91m'
+results_file = 'results.csv'
 
 
 def read_csv_and_fill_data():
-    import os
     import re
     root_dir = os.getcwd()
-    if os.path.exists('results.csv'):
-        os.remove('results.csv')
-    regex = re.compile('.*csv$')
-
-    for root, dirs, files in os.walk(root_dir):
-        index = 0
-        for file in files:
-            if regex.match(file):
-                with open(file, 'r', encoding='utf8') as f:
-                    for line in f:
-                        if line.__contains__('Symbol'):
-                            continue
-                        companies.append([])
-                        _, symbol, sector, industry = list(line.split(','))
-                        industry = industry.replace('\n', '')
-                        companies[index].append(symbol)
-                        companies[index].append(sector)
-                        companies[index].append(industry)
-                        index += 1
+    regex = re.compile('tikers.csv')
+    index = 0
+    for file in os.listdir(root_dir):
+        if os.path.isfile(os.path.join(root_dir, file)) and regex.match(file):
+            with open(file, 'r', encoding='utf8') as f:
+                for line in f:
+                    if line.__contains__('Symbol'):
+                        continue
+                    companies.append([])
+                    _, symbol = list(line.split(','))
+                    symbol = symbol.replace('\n', '')
+                    companies[index].append(symbol)
+                    index += 1
 
 
 def read_csv_results():
     index = 0
-    with open('results.csv', 'r', encoding='utf8') as f:
+    with open(results_file, 'r', encoding='utf8') as f:
         for line in f:
             if line.__contains__('Symbol'):
                 continue
             companies.append([])
-            symbol, cap, pe, price, nums, perc, sector = list(line.split(','))
-            cap = int(cap)
-            pe = float(pe)
+            symbol, sector, industry, price, nums = list(line.split(','))
             price = float(price)
             nums = int(nums)
-            perc = float(perc)
-            sector = sector.replace('\n', '')
             companies[index].append(symbol) \
                 .append(sector) \
-                .append(cap) \
-                .append(pe) \
+                .append(industry) \
                 .append(price) \
-                .append(nums) \
-                .append(perc)
-            del symbol, cap, pe, price, sector, nums, perc
+                .append(nums)
             index += 1
 
 
-def write_output():
-    with open('results.csv', 'w') as f:
+def prepare_output_file():
+    with open(results_file, 'w') as f:
+        f.write('Symbol,Sector,Industry,Current/last price in USD,Number of shares\n')
+
+
+def append_number_of_shares_output():
+    from shutil import copy as sh_copy
+    input_f = 'buf.csv'
+    sh_copy(results_file, input_f)
+    with open(results_file, 'w') as out_file:
+        with open(input_f, 'r') as in_file:
+            j = 0
+            for line in in_file:
+                if line.__contains__('Symbol'):
+                    out_file.write(line)
+                    continue
+                s = line.rstrip('\n') + ',' + str(companies[j][4]) + '\n'
+                out_file.write(s)
+                j += 1
+    os.remove('buf.csv')
+
+
+def append_company_output(company):
+    with open(results_file, 'a') as f:
+        f.write(f'{company[0]},{company[1]},{company[2]},{company[3]}\n')
+
+
+def write_full_output():
+    with open(results_file, 'w') as f:
         f.write('Symbol,Sector,Industry,Current/last price in USD,Number of shares\n')
         # Sector include industry
         for j in range(len(companies)):
@@ -99,9 +117,14 @@ def get_data_yf():
                 companies.remove(companies[j])
                 continue
 
-        if symbol.keys().__contains__('totalDebt') and symbol['totalDebt'] is not None:
-            if symbol['netIncomeToCommon'] / symbol['totalDebt'] < 0.3:
-                print(color_red_to_print + 'Skip due to low coefficient net income/total debt: ' + companies[j][0])
+        if symbol.keys().__contains__('totalDebt'):
+            if symbol['totalDebt'] is not None and symbol['totalDebt'] != 0:
+                if symbol['netIncomeToCommon'] / symbol['totalDebt'] < coefficient_net_income_divided_total_debt:
+                    print(color_red_to_print + 'Skip due to high coefficient net income/total debt: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
+            elif symbol['totalDebt'] is not None and symbol['totalDebt'] == 0:
+                print(color_red_to_print + 'Skip due to unavailable total debt: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
 
@@ -155,10 +178,24 @@ def get_data_yf():
             companies.remove(companies[j])
             continue
 
+        if symbol.keys().__contains__('sector'):
+            symbol['sector'] = symbol['sector'].replace(',', '')
+            symbol['sector'] = symbol['sector'].replace('-', ' ')
+            symbol['sector'] = symbol['sector'].replace('—', ' ').strip()
+            companies[j].append(symbol['sector'])
+
+        if symbol.keys().__contains__('industry'):
+            symbol['industry'] = symbol['industry'].replace(',', '')
+            symbol['industry'] = symbol['industry'].replace('-', ' ')
+            symbol['industry'] = symbol['industry'].replace('—', ' ')
+            symbol['industry'] = symbol['industry'].replace(symbol['sector'], '').strip()
+            companies[j].append(symbol['industry'])
+
         if symbol.keys().__contains__('currentPrice'):
             companies[j].append(symbol['currentPrice'])
 
         print(color_green_to_print + str(companies[j]))
+        append_company_output(companies[j])
         j += 1
 
 
@@ -172,18 +209,20 @@ def count_number_of_shares_using_number_of_companies(amount_in_usd: int):
 
 def update_data():
     read_csv_and_fill_data()
+    prepare_output_file()
     get_data_yf()
-    sort_by_sector()
     count_number_of_shares_using_number_of_companies(16000)
-    write_output()
+    append_number_of_shares_output()
 
 
 if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
 
-    # companies = [['AAPL'], ['GE'], ['XOM'], ['BABA'], ['TSLA'], ['SPCE'], ['GOOG'], ['BRK-B']]
+    # companies = [['AAPL'], ['BRK-B']]
     # companies = [['TSM']]
     # get_data_yf()
+    # count_number_of_shares_using_number_of_companies(16000)
+    # append_number_of_shares_output()
     # count_number_of_shares_using_number_of_companies(16000)
     # write_output()
     # import yfinance as yfl
@@ -193,8 +232,10 @@ if __name__ == '__main__':
     # print(companies)
 
     update_data()
+    # write_full_output()
     # read_csv_results()
 
     end_timer = get_current_time_milliseconds()
     time_of_running = end_timer - start_timer
     print(color_green_to_print + 'Time of running in milliseconds: ' + str(time_of_running))
+    print(color_green_to_print + 'Time of running in seconds: ' + str(time_of_running / 1000))

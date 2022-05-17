@@ -1,45 +1,52 @@
 Symbol,Sector,Industry,Current/last price in USD,Number of shares
-HD,,,294.325,1
-COP,,,104.494,3
-PM,,,105.86,3
-NUE,,,118.0942,3
-HPQ,,,36.82,9
-AMAT,,,111.19,3
-MMM,,,148.08,2
-X,,,24.63,14
-LEN,,,74.94,4
-BBY,,,85.015,4
-PHM,,,41.98,8
-MHK,,,135.51,2
-TER,,,104.36,3
-ZM,,,91.085,3
-GNRC,,,224.74,1
-CROX,,,57.5,6
-SNDR,,,23.51,15
-LII,,,215.45,1
-WLL,,,77.22,4
-REGI,,,61.21,5
-COHU,,,27.9504,13
-CRSR,,,16.4045,22
-RVLV,,,28.43,12
-SSTK,,,62.77,5
-BX,,,105.98,3
-CHK,,,88.75,4
-MOMO,Communication Services,Internet Content & Information,5.06,71
-GOOG,Communication Services,Internet Content & Information,2294.47,0
-FB,Communication Services,Internet Content & Information,199.145,1
-NKE,Consumer Cyclical,Footwear & Accessories,112.37,3
-TGT,Consumer Defensive,Discount Stores,217.01,1
-TSN,Consumer Defensive,Farm Products,90.54,4
-BRK-B,Financial Services,Insurance—Diversified,307.99,1
-BNTX,Healthcare,Biotechnology,152.89,2
-MRNA,Healthcare,Biotechnology,135.5,2
-TSM,Technology,Semiconductors,89.84,4
-AAPL,Technology,Consumer Electronics,144.695,2
-INTC,Technology,Semiconductors,42.94,8
-QCOM,Technology,Semiconductors,132.78,2
-MU,Technology,Semiconductors,71.25,5
-TXN,Technology,Semiconductors,167.73,2
-LRCX,Technology,Semiconductor Equipment & Materials,485.98,0
-AMD,Technology,Semiconductors,94.84,3
-COIN,Technology,Software Application,62.2105,5
+TSM,Technology,Semiconductors,92.78,3
+BNTX,Healthcare,Biotechnology,158.52,1
+TTE,Energy,Oil & Gas Integrated,55.27,5
+SNY,Healthcare,Drug Manufacturers General,52.83,5
+AAPL,Technology,Consumer Electronics,147.315,2
+BRK-B,Financial Services,Insurance Diversified,314.26,0
+GOOG,Communication Services,Internet Content & Information,2310.27,0
+FB,Communication Services,Internet Content & Information,201.21,1
+INTC,Technology,Semiconductors,43.975,7
+HD,Consumer Cyclical,Home Improvement Retail,291.73,1
+MRNA,Healthcare,Biotechnology,140.795,2
+UPS,Industrials,Integrated Freight & Logistics,180.88,1
+COP,Energy,Oil & Gas E&P,107.365,2
+QCOM,Technology,Semiconductors,137.785,2
+PM,Consumer Defensive,Tobacco,106.67,2
+LOW,Consumer Cyclical,Home Improvement Retail,188.19,1
+NUE,Basic Materials,Steel,123.19,2
+MU,Technology,Semiconductors,73.105,4
+TXN,Technology,Semiconductors,173.56,1
+ABT,Healthcare,Medical Devices,114.46,2
+TGT,Consumer Defensive,Discount Stores,212.21,1
+BLK,Financial Services,Asset Management,606.8806,0
+HPQ,Technology,Computer Hardware,39.385,7
+AMAT,Technology,Semiconductor Equipment & Materials,114.57,2
+MMM,Industrials,Conglomerates,151.19,2
+NKE,Consumer Cyclical,Footwear & Accessories,114.07,2
+X,Basic Materials,Steel,24.975,12
+LEN,Consumer Cyclical,Residential Construction,76.4,4
+LRCX,Technology,Semiconductor Equipment & Materials,497.4,0
+TSN,Consumer Defensive,Farm Products,91.56,3
+WLK,Basic Materials,Specialty Chemicals,135.13,2
+NRG,Utilities,Independent Power Producers,44.95,6
+CL,Consumer Defensive,Household & Personal Products,78.5443,3
+COIN,Technology,Software Application,65.77,4
+BBY,Consumer Cyclical,Specialty Retail,82.63,3
+PHM,Consumer Cyclical,Residential Construction,43.625,7
+WRB,Financial Services,Insurance Property & Casualty,68.97,4
+MHK,Consumer Cyclical,Furnishings Fixtures & Appliances,138.68,2
+TER,Technology,Semiconductor Equipment & Materials,106.11,2
+TPR,Consumer Cyclical,Luxury Goods,32.48,9
+ZM,Technology,Software Application,87.91,3
+GNRC,Industrials,Specialty Industrial Machinery,221.345,1
+CROX,Consumer Cyclical,Footwear & Accessories,56.58,5
+SNDR,Industrials,Trucking,23.93,13
+WLL,Energy,Oil & Gas E&P,76.34,4
+REGI,Energy,Oil & Gas Refining & Marketing,61.11,5
+COHU,Technology,Semiconductor Equipment & Materials,29.1155,10
+CRSR,Technology,Computer Hardware,15.94,19
+RVLV,Consumer Cyclical,Internet Retail,28.79,10
+BX,Financial Services,Asset Management,107.62,2
+CHK,Energy,Oil & Gas E&P,89.57,3
