@@ -1,52 +1,55 @@
 Symbol,Sector,Industry,Current/last price in USD,Number of shares
-TSM,Technology,Semiconductors,92.78,3
-BNTX,Healthcare,Biotechnology,158.52,1
-TTE,Energy,Oil & Gas Integrated,55.27,5
-SNY,Healthcare,Drug Manufacturers General,52.83,5
-AAPL,Technology,Consumer Electronics,147.315,2
-BRK-B,Financial Services,Insurance Diversified,314.26,0
-GOOG,Communication Services,Internet Content & Information,2310.27,0
-FB,Communication Services,Internet Content & Information,201.21,1
-INTC,Technology,Semiconductors,43.975,7
-HD,Consumer Cyclical,Home Improvement Retail,291.73,1
-MRNA,Healthcare,Biotechnology,140.795,2
-UPS,Industrials,Integrated Freight & Logistics,180.88,1
-COP,Energy,Oil & Gas E&P,107.365,2
-QCOM,Technology,Semiconductors,137.785,2
-PM,Consumer Defensive,Tobacco,106.67,2
-LOW,Consumer Cyclical,Home Improvement Retail,188.19,1
-NUE,Basic Materials,Steel,123.19,2
-MU,Technology,Semiconductors,73.105,4
-TXN,Technology,Semiconductors,173.56,1
-ABT,Healthcare,Medical Devices,114.46,2
-TGT,Consumer Defensive,Discount Stores,212.21,1
-BLK,Financial Services,Asset Management,606.8806,0
-HPQ,Technology,Computer Hardware,39.385,7
-AMAT,Technology,Semiconductor Equipment & Materials,114.57,2
-MMM,Industrials,Conglomerates,151.19,2
-NKE,Consumer Cyclical,Footwear & Accessories,114.07,2
-X,Basic Materials,Steel,24.975,12
-LEN,Consumer Cyclical,Residential Construction,76.4,4
-LRCX,Technology,Semiconductor Equipment & Materials,497.4,0
-TSN,Consumer Defensive,Farm Products,91.56,3
-WLK,Basic Materials,Specialty Chemicals,135.13,2
-NRG,Utilities,Independent Power Producers,44.95,6
-CL,Consumer Defensive,Household & Personal Products,78.5443,3
-COIN,Technology,Software Application,65.77,4
-BBY,Consumer Cyclical,Specialty Retail,82.63,3
-PHM,Consumer Cyclical,Residential Construction,43.625,7
-WRB,Financial Services,Insurance Property & Casualty,68.97,4
-MHK,Consumer Cyclical,Furnishings Fixtures & Appliances,138.68,2
-TER,Technology,Semiconductor Equipment & Materials,106.11,2
-TPR,Consumer Cyclical,Luxury Goods,32.48,9
-ZM,Technology,Software Application,87.91,3
-GNRC,Industrials,Specialty Industrial Machinery,221.345,1
-CROX,Consumer Cyclical,Footwear & Accessories,56.58,5
-SNDR,Industrials,Trucking,23.93,13
-WLL,Energy,Oil & Gas E&P,76.34,4
-REGI,Energy,Oil & Gas Refining & Marketing,61.11,5
-COHU,Technology,Semiconductor Equipment & Materials,29.1155,10
-CRSR,Technology,Computer Hardware,15.94,19
-RVLV,Consumer Cyclical,Internet Retail,28.79,10
-BX,Financial Services,Asset Management,107.62,2
-CHK,Energy,Oil & Gas E&P,89.57,3
+TSM,Technology,Semiconductors,90.53,3
+BNTX,Healthcare,Biotechnology,157.06,1
+TTE,Energy,Oil & Gas Integrated,54.4,5
+SNY,Healthcare,Drug Manufacturers General,52.39,5
+AAPL,Technology,Consumer Electronics,140.82,2
+BRK-B,Financial Services,Insurance Diversified,306.64,0
+GOOG,Communication Services,Internet Content & Information,2248.02,0
+MSFT,Technology,Software Infrastructure,254.08,1
+FB,Communication Services,Internet Content & Information,192.24,1
+INTC,Technology,Semiconductors,42.35,6
+HD,Consumer Cyclical,Home Improvement Retail,285.18,1
+MRNA,Healthcare,Biotechnology,137.71,2
+UPS,Industrials,Integrated Freight & Logistics,172.23,1
+COP,Energy,Oil & Gas E&P,104.48,2
+QCOM,Technology,Semiconductors,130.45,2
+PM,Consumer Defensive,Tobacco,106.18,2
+LOW,Consumer Cyclical,Home Improvement Retail,183.82,1
+NUE,Basic Materials,Steel,119.18,2
+MU,Technology,Semiconductors,71.05,4
+TXN,Technology,Semiconductors,170.3,1
+ABT,Healthcare,Medical Devices,112.74,2
+TGT,Consumer Defensive,Discount Stores,161.61,1
+BLK,Financial Services,Asset Management,591.86,0
+HPQ,Technology,Computer Hardware,36.85,8
+AMAT,Technology,Semiconductor Equipment & Materials,111.34,2
+MMM,Industrials,Conglomerates,148.93,1
+NKE,Consumer Cyclical,Footwear & Accessories,109.37,2
+X,Basic Materials,Steel,23.99,12
+LEN,Consumer Cyclical,Residential Construction,72.4,4
+LRCX,Technology,Semiconductor Equipment & Materials,477.48,0
+TSN,Consumer Defensive,Farm Products,84.75,3
+AMD,Technology,Semiconductors,96.28,3
+WLK,Basic Materials,Specialty Chemicals,131.04,2
+NRG,Utilities,Independent Power Producers,45.76,6
+CL,Consumer Defensive,Household & Personal Products,75.71,3
+COIN,Technology,Software Application,63.03,4
+BBY,Consumer Cyclical,Specialty Retail,75.62,3
+PHM,Consumer Cyclical,Residential Construction,41.64,7
+WRB,Financial Services,Insurance Property & Casualty,67.91,4
+AA,Basic Materials,Aluminum,60.51,4
+MHK,Consumer Cyclical,Furnishings Fixtures & Appliances,137.01,2
+TER,Technology,Semiconductor Equipment & Materials,102.8,2
+TPR,Consumer Cyclical,Luxury Goods,31.85,9
+ZM,Technology,Software Application,84.69,3
+GNRC,Industrials,Specialty Industrial Machinery,209.81,1
+CROX,Consumer Cyclical,Footwear & Accessories,55.24,5
+SNDR,Industrials,Trucking,22.08,13
+WLL,Energy,Oil & Gas E&P,73.6,4
+REGI,Energy,Oil & Gas Refining & Marketing,61.24,4
+COHU,Technology,Semiconductor Equipment & Materials,29,10
+CRSR,Technology,Computer Hardware,15.25,19
+RVLV,Consumer Cyclical,Internet Retail,27.05,10
+BX,Financial Services,Asset Management,103.54,2
+CHK,Energy,Oil & Gas E&P,86.63,3
