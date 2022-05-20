@@ -247,6 +247,68 @@ class TkinterTable:
         pass
 
 
+def on_focus_in(entry):
+    if entry.cget('state') == 'disabled':
+        entry.configure(state='normal')
+        entry.delete(0, 'end')
+
+
+def on_focus_out(entry, placeholder_inner):
+    if entry.get() == "":
+        entry.insert(0, placeholder_inner)
+        entry.configure(state='disabled')
+
+
+def create_label(master, text, row, column):
+    label = Label(master=master, text=text)
+    label.grid(row=row, column=column)
+
+
+def create_radiobuttons(master, row, column):
+    # @todo check
+    var = StringVar()
+    less_rb = Radiobutton(master=master, text=less_text, value=less_text, variable=var)
+    less_rb.select()
+    less_rb.grid(row=row, column=column)
+    more_rb = Radiobutton(master=master, text=more_than_text, value=more_than_text, variable=var)
+    more_rb.grid(row=row, column=column + 1)
+    return var
+
+
+def create_entry(master, row, column):
+    entry = Entry(master=master)
+    entry.grid(row=row, column=column)
+    entry.insert(0, placeholder)
+    entry.configure(state='disabled')
+    entry.bind('<Button-1>', lambda x: on_focus_in(entry))
+    entry.bind('<FocusOut>', lambda x: on_focus_out(entry, placeholder))
+    return entry
+
+
+def create_filter(master, filter_text):
+    global counter_row, counter_column
+    create_label(master, filter_text, counter_row, counter_column)
+    counter_column += 1
+
+    rb = create_radiobuttons(master, counter_row, counter_column)
+    counter_column += 2
+
+    e = create_entry(master, counter_row, counter_column)
+    counter_row += 1
+    counter_column = 0
+    return rb, e
+
+
+def print_data(event):
+    global rb_pe, pe
+    print(rb_pe.get())
+    print(pe.get())
+
+
+placeholder = 'Input a number'
+less_text = 'less'
+more_than_text = 'more than'
+
 window = Tk()
 window.title('Market stocks calculator')
 window.minsize(400, 250)
@@ -255,21 +317,33 @@ window.iconphoto(False, PhotoImage(file='logo.png'))
 
 frame_results = Frame()
 label_results = Label(master=frame_results, text='Results')
+# @todo replace with actual data
 d = [['Symbol', 'Sector', 'Industry', 'Current/last price in USD', 'Number of stocks'],
      ['TSM', 'Technology', 'Semiconductors', 90.53, 3],
      ['COIN', 'Technology', 'Software Application', 63.03, 4],
      ['AAPL', 'Technology', 'Consumer Electronics', 140.82, 2]]
-r = len(d)
-c = len(d[0])
-t = TkinterTable(frame_results, r, c, d)
+t = TkinterTable(frame_results, len(d), len(d[0]), d)
 
 frame_settings = Frame()
-e_pe = Entry(master=frame_settings)
-e_pe.grid(column=0, row=0)
-e_pe.insert(END, 'P/E')
+counter_row = 0
+counter_column = 0
 
+rb_pe, pe = create_filter(frame_settings, 'P/E:')
+rb_ps, ps = create_filter(frame_settings, 'P/S:')
+rb_pb, pb = create_filter(frame_settings, 'P/B:')
+rb_eps, eps = create_filter(frame_settings, 'EPS:')
+rb_ebitda, ebitda = create_filter(frame_settings, 'EBITDA:')
+rb_debt, debt = create_filter(frame_settings, 'Total debt:')
+rb_coefficient, coefficient = create_filter(frame_settings, 'Coefficient net income/total debt:')
+rb_roe, roe = create_filter(frame_settings, 'ROE:')
+rb_roa, roa = create_filter(frame_settings, 'ROA:')
+rb_cap, cap = create_filter(frame_settings, 'Market capitalization:')
 
-frame_results.grid(column=0, row=0)
-frame_settings.grid(column=1, row=0)
+btn_confirm = Button(master=frame_settings, text='Confirm')
+btn_confirm.grid(row=counter_row, column=counter_column)
+btn_confirm.bind('<Button-1>', print_data)
+
+frame_results.grid(row=0, column=0)
+frame_settings.grid(row=0, column=1)
 window.state('zoomed')
 window.mainloop()
