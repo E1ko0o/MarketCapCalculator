@@ -1,55 +1,32 @@
-Symbol,Sector,Industry,Current/last price in USD,Number of shares
-TSM,Technology,Semiconductors,90.53,3
-BNTX,Healthcare,Biotechnology,157.06,1
-TTE,Energy,Oil & Gas Integrated,54.4,5
-SNY,Healthcare,Drug Manufacturers General,52.39,5
-AAPL,Technology,Consumer Electronics,140.82,2
-BRK-B,Financial Services,Insurance Diversified,306.64,0
-GOOG,Communication Services,Internet Content & Information,2248.02,0
-MSFT,Technology,Software Infrastructure,254.08,1
-FB,Communication Services,Internet Content & Information,192.24,1
-INTC,Technology,Semiconductors,42.35,6
-HD,Consumer Cyclical,Home Improvement Retail,285.18,1
-MRNA,Healthcare,Biotechnology,137.71,2
-UPS,Industrials,Integrated Freight & Logistics,172.23,1
-COP,Energy,Oil & Gas E&P,104.48,2
-QCOM,Technology,Semiconductors,130.45,2
-PM,Consumer Defensive,Tobacco,106.18,2
-LOW,Consumer Cyclical,Home Improvement Retail,183.82,1
-NUE,Basic Materials,Steel,119.18,2
-MU,Technology,Semiconductors,71.05,4
-TXN,Technology,Semiconductors,170.3,1
-ABT,Healthcare,Medical Devices,112.74,2
-TGT,Consumer Defensive,Discount Stores,161.61,1
-BLK,Financial Services,Asset Management,591.86,0
-HPQ,Technology,Computer Hardware,36.85,8
-AMAT,Technology,Semiconductor Equipment & Materials,111.34,2
-MMM,Industrials,Conglomerates,148.93,1
-NKE,Consumer Cyclical,Footwear & Accessories,109.37,2
-X,Basic Materials,Steel,23.99,12
-LEN,Consumer Cyclical,Residential Construction,72.4,4
-LRCX,Technology,Semiconductor Equipment & Materials,477.48,0
-TSN,Consumer Defensive,Farm Products,84.75,3
-AMD,Technology,Semiconductors,96.28,3
-WLK,Basic Materials,Specialty Chemicals,131.04,2
-NRG,Utilities,Independent Power Producers,45.76,6
-CL,Consumer Defensive,Household & Personal Products,75.71,3
-COIN,Technology,Software Application,63.03,4
-BBY,Consumer Cyclical,Specialty Retail,75.62,3
-PHM,Consumer Cyclical,Residential Construction,41.64,7
-WRB,Financial Services,Insurance Property & Casualty,67.91,4
-AA,Basic Materials,Aluminum,60.51,4
-MHK,Consumer Cyclical,Furnishings Fixtures & Appliances,137.01,2
-TER,Technology,Semiconductor Equipment & Materials,102.8,2
-TPR,Consumer Cyclical,Luxury Goods,31.85,9
-ZM,Technology,Software Application,84.69,3
-GNRC,Industrials,Specialty Industrial Machinery,209.81,1
-CROX,Consumer Cyclical,Footwear & Accessories,55.24,5
-SNDR,Industrials,Trucking,22.08,13
-WLL,Energy,Oil & Gas E&P,73.6,4
-REGI,Energy,Oil & Gas Refining & Marketing,61.24,4
-COHU,Technology,Semiconductor Equipment & Materials,29,10
-CRSR,Technology,Computer Hardware,15.25,19
-RVLV,Consumer Cyclical,Internet Retail,27.05,10
-BX,Financial Services,Asset Management,103.54,2
-CHK,Energy,Oil & Gas E&P,86.63,3
+Symbol,Sector,Industry,Current/last price in USD,Number of stocks
+TSM,Technology,Semiconductors,90.78
+BNTX,Healthcare,Biotechnology,163
+TTE,Energy,Oil & Gas Integrated,54.7
+SNY,Healthcare,Drug Manufacturers General,54.4
+AAPL,Technology,Consumer Electronics,137.59
+BRK-B,Financial Services,Insurance Diversified,304.05
+GOOG,Communication Services,Internet Content & Information,2186.26
+MSFT,Technology,Software Infrastructure,252.56
+FB,Communication Services,Internet Content & Information,193.54
+INTC,Technology,Semiconductors,41.65
+HD,Consumer Cyclical,Home Improvement Retail,287.19
+MRNA,Healthcare,Biotechnology,136.25
+UPS,Industrials,Integrated Freight & Logistics,171.04
+COP,Energy,Oil & Gas E&P,105.02
+QCOM,Technology,Semiconductors,131.6
+PM,Consumer Defensive,Tobacco,101.15
+LOW,Consumer Cyclical,Home Improvement Retail,184.69
+NUE,Basic Materials,Steel,119.97
+MU,Technology,Semiconductors,68.9
+TXN,Technology,Semiconductors,169.81
+ABT,Healthcare,Medical Devices,113.24
+TGT,Consumer Defensive,Discount Stores,155.36
+BLK,Financial Services,Asset Management,600.44
+HPQ,Technology,Computer Hardware,34.65
+AMAT,Technology,Semiconductor Equipment & Materials,106.46
+MMM,Industrials,Conglomerates,143.83
+NKE,Consumer Cyclical,Footwear & Accessories,108
+X,Basic Materials,Steel,23.79
+LEN,Consumer Cyclical,Residential Construction,74.44
+LRCX,Technology,Semiconductor Equipment & Materials,474.12
+TSN,Consumer Defensive,Farm Products,85.28
