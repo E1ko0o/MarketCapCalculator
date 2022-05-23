@@ -1,245 +1,296 @@
 from tkinter import *
 
 # @todo подключаться к мосбирже/аналоги
-
-
 import os
-import requests
-key = 'ZI2T9MWM23G38L13'
-# https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo
-# https://www.alphavantage.co/documentation/
-# replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
-symbol = 'AAPL'
-function = 'OVERVIEW'
-url = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&interval=5min&apikey={key}'
-r = requests.get(url)
-data = r.json()
+import time
 
-print(data)
+companies = []
+target_net_income = 0
+target_pb = 3
+target_ps = 10
+target_eps = 1
+target_roe = 0.1
+target_roa = 0.05
+target_pe = 30
+target_market_cap = 1_000_000_000
+coefficient_net_income_divided_total_debt = 0.25
+
+color_green_to_print = '\033[1;92m'
+color_red_to_print = '\033[1;91m'
+results_file = 'results.csv'
 
 
-# def get_current_time_milliseconds():
-#     import time
-#     return round(time.time() * 1000)
-#
-#
-# companies = []
-# target_net_income = 0
-# target_pb = 3
-# target_ps = 10
-# target_eps = 1
-# target_roe = 0.1
-# target_roa = 0.05
-# target_pe = 30
-# target_market_cap = 1_000_000_000
-# coefficient_net_income_divided_total_debt = 0.25
-#
-# color_green_to_print = '\033[1;92m'
-# color_red_to_print = '\033[1;91m'
-# results_file = 'results.csv'
-#
-#
-# def read_csv_and_fill_data():
-#     import re
-#     root_dir = os.getcwd()
-#     regex = re.compile('tikers.csv')
-#     index = 0
-#     for file in os.listdir(root_dir):
-#         if os.path.isfile(os.path.join(root_dir, file)) and regex.match(file):
-#             with open(file, 'r', encoding='utf8') as f:
-#                 for line in f:
-#                     if line.__contains__('Symbol'):
-#                         continue
-#                     companies.append([])
-#                     _, symbol = list(line.split(','))
-#                     symbol = symbol.replace('\n', '')
-#                     companies[index].append(symbol)
-#                     index += 1
-#
-#
-# def read_csv_results():
-#     index = 0
-#     with open(results_file, 'r', encoding='utf8') as f:
-#         for line in f:
-#             if line.__contains__('Symbol'):
-#                 continue
-#             companies.append([])
-#             symbol, sector, industry, price, nums = list(line.split(','))
-#             price = float(price)
-#             nums = int(nums)
-#             companies[index].append(symbol) \
-#                 .append(sector) \
-#                 .append(industry) \
-#                 .append(price) \
-#                 .append(nums)
-#             index += 1
-#
-#
-# def prepare_output_file():
-#     with open(results_file, 'w') as f:
-#         f.write('Symbol,Sector,Industry,Current/last price in USD,Number of stocks\n')
-#
-#
-# def append_number_of_stocks_output():
-#     from shutil import copy as sh_copy
-#     input_f = 'buf.csv'
-#     sh_copy(results_file, input_f)
-#     with open(results_file, 'w') as out_file:
-#         with open(input_f, 'r') as in_file:
-#             j = 0
-#             for line in in_file:
-#                 if line.__contains__('Symbol'):
-#                     out_file.write(line)
-#                     continue
-#                 s = line.rstrip('\n') + ',' + str(companies[j][4]) + '\n'
-#                 out_file.write(s)
-#                 j += 1
-#     os.remove('buf.csv')
-#
-#
-# def append_company_output(company):
-#     with open(results_file, 'a') as f:
-#         f.write(f'{company[0]},{company[1]},{company[2]},{company[3]}\n')
-#
-#
-# def write_full_output():
-#     with open(results_file, 'w') as f:
-#         f.write('Symbol,Sector,Industry,Current/last price in USD,Number of stocks\n')
-#         # Sector include industry
-#         for j in range(len(companies)):
-#             f.write(f'{companies[j][0]},{companies[j][1]},{companies[j][2]},'
-#                     f'{companies[j][3]},{companies[j][4]}\n')
-#
-#
-# def sort_by_symbol():
-#     companies.sort(key=lambda x: x[0], reverse=True)
-#
-#
-# def sort_by_sector():
-#     companies.sort(key=lambda x: x[1], reverse=False)
-#
-#
-# def sort_by_industry():
-#     companies.sort(key=lambda x: x[2], reverse=False)
-#
-#
-# def get_data_yf():
-#     import yfinance as yfl
-#     j = 0
-#     while j < len(companies):
-#         symbol = yfl.Ticker(companies[j][0]).info
-#         if symbol.keys().__contains__('netIncomeToCommon'):
-#             if symbol['netIncomeToCommon'] < target_net_income:
-#                 print(color_red_to_print + 'Skip due to negative net income: ' + companies[j][0])
-#                 companies.remove(companies[j])
-#                 continue
-#
-#         if symbol.keys().__contains__('totalDebt'):
-#             if symbol['totalDebt'] is not None and symbol['totalDebt'] != 0:
-#                 if symbol['netIncomeToCommon'] / symbol['totalDebt'] < coefficient_net_income_divided_total_debt:
-#                     print(color_red_to_print + 'Skip due to low coefficient net income/total debt: ' + companies[j][0])
-#                     companies.remove(companies[j])
-#                     continue
-#             elif symbol['totalDebt'] is not None and symbol['totalDebt'] == 0:
-#                 print(color_red_to_print + 'Skip due to unavailable total debt: ' + companies[j][0])
-#                 companies.remove(companies[j])
-#                 continue
-#
-#         if symbol.keys().__contains__('priceToSalesTrailing12Months') \
-#                 and symbol['priceToSalesTrailing12Months'] is not None:
-#             if symbol['priceToSalesTrailing12Months'] > target_ps:
-#                 print(color_red_to_print + 'Skip due to high p/s: ' + companies[j][0])
-#                 companies.remove(companies[j])
-#                 continue
-#
-#         if symbol.keys().__contains__('trailingEps') \
-#                 and symbol['trailingEps'] is not None \
-#                 and symbol.keys().__contains__('forwardEps') \
-#                 and symbol['forwardEps'] is not None:
-#             if symbol['trailingEps'] < 1 or symbol['forwardEps'] < target_eps:
-#                 print(color_red_to_print + 'Skip due to low eps: ' + companies[j][0])
-#                 companies.remove(companies[j])
-#                 continue
-#
-#         if symbol.keys().__contains__('returnOnEquity') and symbol['returnOnEquity'] is not None and \
-#                 symbol.keys().__contains__('returnOnAssets') and symbol['returnOnAssets'] is not None:
-#             if symbol['returnOnEquity'] < target_roe or symbol['returnOnAssets'] < target_roa:
-#                 print(color_red_to_print + 'Skip due to low return on equity/assets: ' + companies[j][0])
-#                 companies.remove(companies[j])
-#                 continue
-#             elif (symbol['returnOnEquity'] < 2 * target_roe or symbol['returnOnAssets'] < 2 * target_roa) and \
-#                     symbol.keys().__contains__('priceToBook') and symbol['priceToBook'] is not None:
-#                 if symbol['priceToBook'] > target_pb:
-#                     print(color_red_to_print + 'Skip due to high p/b: ' + companies[j][0])
-#                     companies.remove(companies[j])
-#                     continue
-#
-#         if symbol.keys().__contains__('marketCap') and symbol['marketCap'] is not None:
-#             if symbol['marketCap'] < target_market_cap:
-#                 print(color_red_to_print + 'Skip due to low market cap: ' + companies[j][0])
-#                 companies.remove(companies[j])
-#                 continue
-#
-#         if symbol.keys().__contains__('trailingPE') and symbol['trailingPE'] is not None:
-#             if symbol['trailingPE'] > target_pe:
-#                 print(color_red_to_print + 'Skip due to high p/e: ' + companies[j][0])
-#                 companies.remove(companies[j])
-#                 continue
-#         elif symbol.keys().__contains__('forwardPE') and symbol['forwardPE'] is not None:
-#             if symbol['forwardPE'] > target_pe:
-#                 print(color_red_to_print + 'Skip due to high p/e: ' + companies[j][0])
-#                 companies.remove(companies[j])
-#                 continue
-#         else:
-#             print(color_red_to_print + 'Skip due to unavailable p/e: ' + companies[j][0])
-#             companies.remove(companies[j])
-#             continue
-#
-#         if symbol.keys().__contains__('sector'):
-#             symbol['sector'] = symbol['sector'].replace(',', '')
-#             symbol['sector'] = symbol['sector'].replace('-', ' ')
-#             symbol['sector'] = symbol['sector'].replace('—', ' ').strip()
-#             companies[j].append(symbol['sector'])
-#
-#         if symbol.keys().__contains__('industry'):
-#             symbol['industry'] = symbol['industry'].replace(',', '')
-#             symbol['industry'] = symbol['industry'].replace('-', ' ')
-#             symbol['industry'] = symbol['industry'].replace('—', ' ')
-#             symbol['industry'] = symbol['industry'].replace(symbol['sector'], '').strip()
-#             companies[j].append(symbol['industry'])
-#
-#         if symbol.keys().__contains__('currentPrice'):
-#             companies[j].append(symbol['currentPrice'])
-#
-#         print(color_green_to_print + str(companies[j]))
-#         append_company_output(companies[j])
-#         j += 1
-#
-#
-# def count_number_of_stocks_using_number_of_companies(amount_in_usd: int):
-#     percentage = round(1 / len(companies), 5)
-#     amount_for_company = round(amount_in_usd * percentage, 5)
-#     for i in range(len(companies)):
-#         number_of_stocks = float(amount_for_company) // float(companies[i][3])
-#         companies[i].append(int(number_of_stocks))
-#
-#
-# def update_data():
-#     read_csv_and_fill_data()
-#     prepare_output_file()
-#     get_data_yf()
-#     count_number_of_stocks_using_number_of_companies(16000)
-#     append_number_of_stocks_output()
-#
-#
-# if __name__ == '__main__':
-#     start_timer = get_current_time_milliseconds()
-#     update_data()
-#     end_timer = get_current_time_milliseconds()
-#     time_of_running = end_timer - start_timer
-#     print(color_green_to_print + 'Time of running in milliseconds: ' + str(time_of_running))
-#     print(color_green_to_print + 'Time of running in seconds: ' + str(time_of_running / 1000))
+def get_current_time_milliseconds():
+    return round(time.time() * 1000)
 
+
+def read_csv_and_fill_data():
+    import re
+    root_dir = os.getcwd()
+    regex = re.compile('tikers.csv')
+    index = 0
+    for file in os.listdir(root_dir):
+        if os.path.isfile(os.path.join(root_dir, file)) and regex.match(file):
+            with open(file, 'r', encoding='utf8') as f:
+                for line in f:
+                    if line.__contains__('Symbol'):
+                        continue
+                    companies.append([])
+                    _, symbol = list(line.split(','))
+                    symbol = symbol.replace('\n', '')
+                    companies[index].append(symbol)
+                    index += 1
+
+
+def read_csv_results():
+    index = 0
+    with open(results_file, 'r', encoding='utf8') as f:
+        for line in f:
+            if line.__contains__('Symbol'):
+                continue
+            companies.append([])
+            symbol, sector, industry, price, nums = list(line.split(','))
+            price = float(price)
+            nums = int(nums)
+            companies[index].append(symbol) \
+                .append(sector) \
+                .append(industry) \
+                .append(price) \
+                .append(nums)
+            index += 1
+
+
+def prepare_output_file():
+    with open(results_file, 'w') as f:
+        f.write('Symbol,Sector,Industry,Current/last price in USD,Number of stocks\n')
+
+
+def append_number_of_stocks_output():
+    from shutil import copy as sh_copy
+    input_f = 'buf.csv'
+    sh_copy(results_file, input_f)
+    with open(results_file, 'w') as out_file:
+        with open(input_f, 'r') as in_file:
+            j = 0
+            for line in in_file:
+                if line.__contains__('Symbol'):
+                    out_file.write(line)
+                    continue
+                s = line.rstrip('\n') + ',' + str(companies[j][4]) + '\n'
+                out_file.write(s)
+                j += 1
+    os.remove('buf.csv')
+
+
+def append_company_output(company):
+    with open(results_file, 'a') as f:
+        f.write(f'{company[0]},{company[1]},{company[2]},{company[3]}\n')
+
+
+def write_full_output():
+    with open(results_file, 'w') as f:
+        f.write('Symbol,Sector,Industry,Current/last price in USD,Number of stocks\n')
+        # Sector include industry
+        for j in range(len(companies)):
+            f.write(f'{companies[j][0]},{companies[j][1]},{companies[j][2]},'
+                    f'{companies[j][3]},{companies[j][4]}\n')
+
+
+def sort_by_symbol():
+    companies.sort(key=lambda x: x[0], reverse=True)
+
+
+def sort_by_sector():
+    companies.sort(key=lambda x: x[1], reverse=False)
+
+
+def sort_by_industry():
+    companies.sort(key=lambda x: x[2], reverse=False)
+
+
+def get_data_yf():
+    from torrequest import TorRequest
+    import yahoofinancials as yf
+    st = get_current_time_milliseconds()
+    aapl = yf.YahooFinancials('AAPL')
+    print(aapl.get_market_cap())
+    end = get_current_time_milliseconds()
+    print(f'Time in milliseconds: {end-st}')
+
+    keys = [
+        'IZ97YFC2NES1NJ4Y',
+        'UXX87R2JPQH8HJZM',
+        'LBN8JWZI6OM0TZ7A',
+        'O6SQ1Z4O53LXYDWO',
+        '6MSQE0ZTBCZ01KMT',
+        'A7PNLK5GFXG284D9',
+        'K5OH1H43R79HJJSL',
+        'IVRSRHLKLSMT1VQQ',
+        'ZI2T9MWM23G38L13',
+        'YA5ARUMIEZ6UPF71',
+        'LBV1U5G7EKZOF9J0',
+        '4WLF89KBDF7855TB',
+        'JJMHSYNG7WC91EC2',
+        '8E1Q5IQ230LJ5RGU',
+        'IUWUM39TIA73TRB9',
+        '7ITG8KDEMUOIH0DS',
+        'HF4XTKJN2L22PUH4',
+        'I383J8XJAHJWU305',
+        'DD1A82I4S9SJAVPS',
+        'V73SN5D69WWG51NQ',
+        'Z8H4JYB6MXTFF5H5',
+        '1JMYNQVPYY534GO1',
+        'V5OOE342IVF6P93Z',
+        'K8LTYQGL5GD71ME0',
+        'G2SQTV0D2WLMTLE2',
+        'M5OH32NNJ1MUZBZS',
+        'SKF1FOX9WW2P38VJ',
+        'LSU30R9TFT40GN2L',
+        'BZB64VSU8BVS6SC6',
+        'DSBH4VZGS7MO5WWM',
+        '72RCJTFQC32SBKUL',
+        'UG11URMTCZIGMR04',
+        'UP1WU4A7A8F08KWO',
+        'WE1QO0O7GOU4WDPT',
+        'WAU6KYWAUUOWV71O',
+        'Q9YHM1HTUAJ5NFXT',
+        'DVU5T1JSE3SHP0W4',
+        'JM61YITH0V8W8FNV',
+        'PGEPDMUWAMATIH6W',
+        'L8ZMFDI4GSA6BK70',
+        'UW8J2L4QN8UM9B2J',
+        'IBYN0HSB8YGGZJEL',
+        'ICAMVKHH9TSPWV9P',
+        'YJTHGV2ROWV6MU7D',
+        '2TDY5MJ7LTCVWREB',
+        'B5TA0LAXWJL3K6VY',
+        'ETY0IF01ZP16HEFR',
+        '5O15SPAKFR3I1RJO',
+        'JVFZ7P9UR5MKASVO',
+        'O0WC12W3D5CTINF5',
+        'USNHHWRRCIMM1BRT',
+    ]  # 12/0.3 = 40
+    # https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo
+    # https://www.alphavantage.co/documentation/
+    rand = 0
+    j = 0
+    k = 0
+    # while j < len(companies):
+    #     tr = TorRequest()
+    #     k += 1
+    #     if k % 4 == 0:
+    #         tr.reset_identity()
+    #         tr.ctrl.signal('CLEARDNSCACHE')
+    #         print("New Ip Address", tr.get('http://icanhazip.com').text)
+    #     function = 'OVERVIEW'
+    #     url = f'https://www.alphavantage.co/query?function={function}&symbol={companies[j][0]}' \
+    #           f'&interval=1min&apikey={keys[rand]}'
+    #     response = tr.get(url)
+    #     symbol = response.json()
+    #     rand += 1
+    #     if rand >= len(keys):
+    #         rand = 0
+    #
+    #     if symbol.__contains__('PriceToSalesRatioTTM'):
+    #         if not symbol['PriceToSalesRatioTTM'].__contains__('-'):
+    #             if float(symbol['PriceToSalesRatioTTM']) > target_ps:
+    #                 print(color_red_to_print + 'Skip due to high P/S: ' + companies[j][0])
+    #                 companies.remove(companies[j])
+    #                 continue
+    #         else:
+    #             print(color_red_to_print + 'Skip due to negative P/S: ' + companies[j][0])
+    #             companies.remove(companies[j])
+    #             continue
+    #
+    #     if symbol.__contains__('EPS'):
+    #         if not symbol['EPS'].__contains__('-'):
+    #             if float(symbol['EPS']) < target_eps:
+    #                 print(color_red_to_print + 'Skip due to low EPS: ' + companies[j][0])
+    #                 companies.remove(companies[j])
+    #                 continue
+    #         else:
+    #             print(color_red_to_print + 'Skip due to negative EPS: ' + companies[j][0])
+    #             companies.remove(companies[j])
+    #             continue
+    #
+    #     if symbol.__contains__('ReturnOnEquityTTM') and symbol.__contains__('ReturnOnAssetsTTM'):
+    #         if float(symbol['ReturnOnEquityTTM']) < target_roe or float(symbol['ReturnOnAssetsTTM']) < target_roa:
+    #             print(color_red_to_print + 'Skip due to low return on equity/assets: ' + companies[j][0])
+    #             companies.remove(companies[j])
+    #             continue
+    #         elif (float(symbol['ReturnOnEquityTTM']) < 2 * target_roe or
+    #               float(symbol['ReturnOnAssetsTTM']) < 2 * target_roa) and \
+    #                 symbol.__contains__('PriceToBookRatio'):
+    #             if float(symbol['PriceToBookRatio']) > target_pb:
+    #                 print(color_red_to_print + 'Skip due to high P/B: ' + companies[j][0])
+    #                 companies.remove(companies[j])
+    #                 continue
+    #
+    #     if symbol.__contains__('MarketCapitalization'):
+    #         if float(symbol['MarketCapitalization']) < target_market_cap:
+    #             print(color_red_to_print + 'Skip due to low market cap: ' + companies[j][0])
+    #             companies.remove(companies[j])
+    #             continue
+    #
+    #     if symbol.__contains__('PERatio'):
+    #         if not symbol['PERatio'].__contains__('-'):
+    #             if float(symbol['PERatio']) > target_pe:
+    #                 print(color_red_to_print + 'Skip due to high P/E: ' + companies[j][0])
+    #                 companies.remove(companies[j])
+    #                 continue
+    #         else:
+    #             print(color_red_to_print + 'Skip due to negative P/E: ' + companies[j][0])
+    #             companies.remove(companies[j])
+    #             continue
+    #
+    #     if symbol.__contains__('Sector'):
+    #         symbol['Sector'] = symbol['Sector'].strip()
+    #         companies[j].append(symbol['Sector'])
+    #
+    #     if symbol.__contains__('Industry'):
+    #         symbol['Industry'] = symbol['Industry'].strip()
+    #         companies[j].append(symbol['Industry'])
+    #
+    #     function = 'TIME_SERIES_INTRADAY'
+    #     url = f'https://www.alphavantage.co/query?function={function}&symbol={companies[j][0]}' \
+    #           f'&interval=1min&apikey={keys[rand]}'
+    #     response = tr.get(url)
+    #     symbol = response.json()
+    #     rand += 1
+    #     if rand >= len(keys):
+    #         rand = 0
+    #
+    #     print(symbol)
+    #     companies[j].append(list(list(list(symbol.values())[1].values())[0].values())[3])
+    #
+    #     print(color_green_to_print + str(companies[j]))
+    #     append_company_output(companies[j])
+    #     j += 1
+
+
+def count_number_of_stocks_using_number_of_companies(amount_in_usd: int):
+    percentage = round(1 / len(companies), 5)
+    amount_for_company = round(amount_in_usd * percentage, 5)
+    for i in range(len(companies)):
+        number_of_stocks = float(amount_for_company) // float(companies[i][3])
+        companies[i].append(int(number_of_stocks))
+
+
+def update_data():
+    read_csv_and_fill_data()
+    prepare_output_file()
+    get_data_yf()
+    # count_number_of_stocks_using_number_of_companies(16000)
+    # append_number_of_stocks_output()
+
+
+if __name__ == '__main__':
+    start_timer = get_current_time_milliseconds()
+    update_data()
+    end_timer = get_current_time_milliseconds()
+    time_of_running = end_timer - start_timer
+    print(color_green_to_print + 'Time of running in milliseconds: ' + str(time_of_running))
+    print(color_green_to_print + 'Time of running in seconds: ' + str(time_of_running / 1000))
 
 # class TkinterTable:
 #     def __init__(self, root, rows, columns, data):
