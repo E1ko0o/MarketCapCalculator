@@ -1,10 +1,14 @@
 from tkinter import *
-
-# @todo подключаться к мосбирже/аналоги
 import os
 import time
 
+from utils_ui import Table
+
 companies = []
+results_file = 'results.csv'
+symbols_file = 'symbols.csv'
+
+# Filters
 target_net_income = 0
 target_pb = 3
 target_ps = 10
@@ -15,9 +19,74 @@ target_pe = 30
 target_market_cap = 1_000_000_000
 coefficient_net_income_divided_total_debt = 0.25
 
+# Colors for print
 color_green_to_print = '\033[1;92m'
 color_red_to_print = '\033[1;91m'
-results_file = 'results.csv'
+
+# For ui
+placeholder = 'Input a number'
+less_text = 'less'
+more_than_text = 'more than'
+global_x = 0
+global_width = []
+
+
+def on_focus_in(entry):
+    if entry.cget('state') == 'disabled':
+        entry.configure(state='normal')
+        entry.delete(0, 'end')
+
+
+def on_focus_out(entry, placeholder_inner):
+    if entry.get() == "":
+        entry.insert(0, placeholder_inner)
+        entry.configure(state='disabled')
+
+
+def create_label(master, text, row, column):
+    label = Label(master=master, text=text)
+    label.grid(row=row, column=column)
+
+
+def create_radiobuttons(master, row, column):
+    # @todo check
+    var = StringVar()
+    less_rb = Radiobutton(master=master, text=less_text, value=less_text, variable=var)
+    less_rb.select()
+    less_rb.grid(row=row, column=column)
+    more_rb = Radiobutton(master=master, text=more_than_text, value=more_than_text, variable=var)
+    more_rb.grid(row=row, column=column + 1)
+    return var
+
+
+def create_entry(master, row, column):
+    entry = Entry(master=master)
+    entry.grid(row=row, column=column)
+    entry.insert(0, placeholder)
+    entry.configure(state='disabled')
+    entry.bind('<Button-1>', lambda x: on_focus_in(entry))
+    entry.bind('<FocusOut>', lambda x: on_focus_out(entry, placeholder))
+    return entry
+
+
+def create_filter(master, filter_text):
+    global counter_row, counter_column
+    create_label(master, filter_text, counter_row, counter_column)
+    counter_column += 1
+
+    rb = create_radiobuttons(master, counter_row, counter_column)
+    counter_column += 2
+
+    e = create_entry(master, counter_row, counter_column)
+    counter_row += 1
+    counter_column = 0
+    return rb, e
+
+
+def print_data(event):
+    global rb_pe, pe
+    print(rb_pe.get())
+    print(pe.get())
 
 
 def get_current_time_milliseconds():
@@ -25,38 +94,33 @@ def get_current_time_milliseconds():
 
 
 def read_csv_and_fill_data():
-    import re
-    root_dir = os.getcwd()
-    regex = re.compile('tikers.csv')
     index = 0
-    for file in os.listdir(root_dir):
-        if os.path.isfile(os.path.join(root_dir, file)) and regex.match(file):
-            with open(file, 'r', encoding='utf8') as f:
-                for line in f:
-                    if line.__contains__('Symbol'):
-                        continue
-                    companies.append([])
-                    _, symbol = list(line.split(','))
-                    symbol = symbol.replace('\n', '')
-                    companies[index].append(symbol)
-                    index += 1
+    with open(symbols_file, 'r') as f:
+        for line in f:
+            if line.__contains__('Symbol') or line.strip().__eq__(''):
+                continue
+            companies.append([])
+            _, symbol = list(line.split(','))
+            symbol = symbol.replace('\n', '')
+            companies[index].append(symbol)
+            index += 1
 
 
 def read_csv_results():
     index = 0
-    with open(results_file, 'r', encoding='utf8') as f:
+    with open(results_file, 'r') as f:
         for line in f:
-            if line.__contains__('Symbol'):
-                continue
             companies.append([])
             symbol, sector, industry, price, nums = list(line.split(','))
-            price = float(price)
-            nums = int(nums)
-            companies[index].append(symbol) \
-                .append(sector) \
-                .append(industry) \
-                .append(price) \
-                .append(nums)
+            companies[index].append(symbol)
+            companies[index].append(sector)
+            companies[index].append(industry)
+            if line.__contains__('Symbol'):
+                companies[index].append(price)
+                companies[index].append(nums)
+            else:
+                companies[index].append(float(price))
+                companies[index].append(int(nums))
             index += 1
 
 
@@ -116,6 +180,8 @@ def get_data_yf():
         "X-RapidAPI-Host": "yh-finance.p.rapidapi.com",
         "X-RapidAPI-Key": "c14ba60263msh1d75ac31f7bbeeap1f679ejsn684e4f6dccb8"
     }
+    # "X-RapidAPI-Key": "f761bc90aemsh14894d87cb4757ap1851d5jsn8e91db991e16" = 0
+    # https://smailpro.com/advanced
     j = 0
     while j < len(companies):
         querystring = {"symbol": f'{companies[j][0]}'}
@@ -160,7 +226,8 @@ def get_data_yf():
 
         # financialData - - raw
         try:
-            if float(data['financialData']['returnOnEquity']['raw']) < target_roe or float(data['financialData']['returnOnAssets']['raw']) < target_roa:
+            if float(data['financialData']['returnOnEquity']['raw']) < target_roe or float(
+                    data['financialData']['returnOnAssets']['raw']) < target_roa:
                 print(color_red_to_print + 'Skip due to low return on equity/assets: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
@@ -204,10 +271,10 @@ def get_data_yf():
             continue
 
         # summaryProfile -
-        companies[j].append(data['summaryProfile']['sector'])
+        companies[j].append(data['summaryProfile']['sector'].replace('—', '-').replace(',', '-'))
 
         # summaryProfile -
-        companies[j].append(data['summaryProfile']['industry'])
+        companies[j].append(data['summaryProfile']['industry'].replace('—', '-').replace(',', '-'))
 
         # financialData - currentPrice - raw
         companies[j].append(float(data['financialData']['currentPrice']['raw']))
@@ -226,11 +293,13 @@ def count_number_of_stocks_using_number_of_companies(amount_in_usd: int):
 
 
 def update_data():
-    read_csv_and_fill_data()
-    prepare_output_file()
-    get_data_yf()
-    count_number_of_stocks_using_number_of_companies(16000)
-    append_number_of_stocks_output()
+    read_csv_results()
+
+    # read_csv_and_fill_data()
+    # prepare_output_file()
+    # get_data_yf()
+    # count_number_of_stocks_using_number_of_companies(16000)
+    # append_number_of_stocks_output()
 
 
 if __name__ == '__main__':
@@ -241,123 +310,49 @@ if __name__ == '__main__':
     print(color_green_to_print + 'Time of running in milliseconds: ' + str(time_of_running))
     print(color_green_to_print + 'Time of running in seconds: ' + str(time_of_running / 1000))
 
-# class TkinterTable:
-#     def __init__(self, root, rows, columns, data):
-#         length_of_columns = []
-#         for x in range(columns):
-#             m = 0
-#             for y in range(rows):
-#                 m = max(m, len(str(data[y][x])))
-#             length_of_columns.append(m)
-#         for x in range(rows):
-#             for y in range(columns):
-#                 self.e = Entry(master=root, width=length_of_columns[y], fg='black', font=('Arial', 11, 'normal'))
-#                 self.e.grid(row=x, column=y)
-#                 self.e.insert(END, data[x][y])
-#                 self.e.config(state='readonly')
-#
-#     def add_entry(self, root, entry):
-#         # @TODO make x and y global in grid
-#         pass
-#
-#
-# def on_focus_in(entry):
-#     if entry.cget('state') == 'disabled':
-#         entry.configure(state='normal')
-#         entry.delete(0, 'end')
-#
-#
-# def on_focus_out(entry, placeholder_inner):
-#     if entry.get() == "":
-#         entry.insert(0, placeholder_inner)
-#         entry.configure(state='disabled')
-#
-#
-# def create_label(master, text, row, column):
-#     label = Label(master=master, text=text)
-#     label.grid(row=row, column=column)
-#
-#
-# def create_radiobuttons(master, row, column):
-#     # @todo check
-#     var = StringVar()
-#     less_rb = Radiobutton(master=master, text=less_text, value=less_text, variable=var)
-#     less_rb.select()
-#     less_rb.grid(row=row, column=column)
-#     more_rb = Radiobutton(master=master, text=more_than_text, value=more_than_text, variable=var)
-#     more_rb.grid(row=row, column=column + 1)
-#     return var
-#
-#
-# def create_entry(master, row, column):
-#     entry = Entry(master=master)
-#     entry.grid(row=row, column=column)
-#     entry.insert(0, placeholder)
-#     entry.configure(state='disabled')
-#     entry.bind('<Button-1>', lambda x: on_focus_in(entry))
-#     entry.bind('<FocusOut>', lambda x: on_focus_out(entry, placeholder))
-#     return entry
-#
-#
-# def create_filter(master, filter_text):
-#     global counter_row, counter_column
-#     create_label(master, filter_text, counter_row, counter_column)
-#     counter_column += 1
-#
-#     rb = create_radiobuttons(master, counter_row, counter_column)
-#     counter_column += 2
-#
-#     e = create_entry(master, counter_row, counter_column)
-#     counter_row += 1
-#     counter_column = 0
-#     return rb, e
-#
-#
-# def print_data(event):
-#     global rb_pe, pe
-#     print(rb_pe.get())
-#     print(pe.get())
-#
-#
-# placeholder = 'Input a number'
-# less_text = 'less'
-# more_than_text = 'more than'
-#
-# window = Tk()
-# window.title('Market stocks calculator')
-# window.minsize(400, 250)
-# window.maxsize(2880, 1620)
-# window.iconphoto(False, PhotoImage(file='logo.png'))
-#
-# frame_results = Frame()
-# label_results = Label(master=frame_results, text='Results')
-# # @todo replace with actual data
-# d = [['Symbol', 'Sector', 'Industry', 'Current/last price in USD', 'Number of stocks'],
-#      ['TSM', 'Technology', 'Semiconductors', 90.53, 3],
-#      ['COIN', 'Technology', 'Software Application', 63.03, 4],
-#      ['AAPL', 'Technology', 'Consumer Electronics', 140.82, 2]]
-# t = TkinterTable(frame_results, len(d), len(d[0]), d)
-#
-# frame_settings = Frame()
-# counter_row = 0
-# counter_column = 0
-#
-# rb_pe, pe = create_filter(frame_settings, 'P/E:')
-# rb_ps, ps = create_filter(frame_settings, 'P/S:')
-# rb_pb, pb = create_filter(frame_settings, 'P/B:')
-# rb_eps, eps = create_filter(frame_settings, 'EPS:')
-# rb_ebitda, ebitda = create_filter(frame_settings, 'EBITDA:')
-# rb_debt, debt = create_filter(frame_settings, 'Total debt:')
-# rb_coefficient, coefficient = create_filter(frame_settings, 'Coefficient net income/total debt:')
-# rb_roe, roe = create_filter(frame_settings, 'ROE:')
-# rb_roa, roa = create_filter(frame_settings, 'ROA:')
-# rb_cap, cap = create_filter(frame_settings, 'Market capitalization:')
-#
-# btn_confirm = Button(master=frame_settings, text='Confirm')
-# btn_confirm.grid(row=counter_row, column=counter_column)
-# btn_confirm.bind('<Button-1>', print_data)
-#
-# frame_results.grid(row=0, column=0)
-# frame_settings.grid(row=0, column=1)
-# window.state('zoomed')
-# window.mainloop()
+    window = Tk()
+    window.title('Market stocks calculator')
+    window.minsize(400, 250)
+    window.maxsize(2880, 1620)
+    window.iconphoto(False, PhotoImage(file='logo.png'))
+
+    frame_results = Frame()
+    label_results = Label(master=frame_results, text='Results')
+
+    length_of_columns = []
+    for x in range(len(companies[0]) - 2):
+        length_of_columns.append(len(companies[0][x]))
+    length_of_columns.append(None)
+    length_of_columns.append(None)
+    table = Table(master=window, height=600, column_headers=companies[0], column_min_widths=length_of_columns)
+    table.pack()
+
+    table.set_data(companies[1:])
+    table.insert_row(['WWWW', 'F', 'A', 100.0, 2])
+    window.update()
+
+    # frame_settings = Frame()
+    # counter_row = 0
+    # counter_column = 0
+    #
+    # rb_pe, pe = create_filter(frame_settings, 'P/E:')
+    # rb_ps, ps = create_filter(frame_settings, 'P/S:')
+    # rb_pb, pb = create_filter(frame_settings, 'P/B:')
+    # rb_eps, eps = create_filter(frame_settings, 'EPS:')
+    # rb_ebitda, ebitda = create_filter(frame_settings, 'EBITDA:')
+    # rb_debt, debt = create_filter(frame_settings, 'Total debt:')
+    # rb_coefficient, coefficient = create_filter(frame_settings, 'Coefficient net income/total debt:')
+    # rb_roe, roe = create_filter(frame_settings, 'ROE:')
+    # rb_roa, roa = create_filter(frame_settings, 'ROA:')
+    # rb_cap, cap = create_filter(frame_settings, 'Market capitalization:')
+    #
+    # btn_confirm = Button(master=frame_settings, text='Confirm')
+    # btn_confirm.grid(row=counter_row, column=counter_column)
+    # btn_confirm.bind('<Button-1>', print_data)
+    #
+    # frame_results.grid(row=0, column=0)
+    # frame_settings.grid(row=0, column=1)
+    # frame_results.pack()
+    # frame_settings.pack()
+    window.state('zoomed')
+    window.mainloop()
