@@ -9,15 +9,26 @@ results_file = 'results.csv'
 symbols_file = 'symbols.csv'
 
 # Filters
-target_net_income = 0
-target_pb = 3
-target_ps = 10
-target_eps = 1
-target_roe = 0.1
-target_roa = 0.05
 target_pe = 30
+sign_pe = '>'
+target_ps = 10
+sign_ps = '>'
+target_pb = 3
+sign_pb = '>'
+target_eps = 1
+sign_eps = '<'
+target_roe = 0.1
+sign_roe = '<'
+target_roa = 0.05
+sign_roa = '<'
 target_market_cap = 1_000_000_000
-coefficient_net_income_divided_total_debt = 0.25
+sign_market_cap = '<'
+target_ebitda = 1_000_000_000 #@todo check
+sign_ebitda = '<'
+target_total_debt = 1_000_000_000 #@todo check
+sign_total_debt = '>'
+target_rps = 1
+sign_rps = '>'
 
 # Colors for print
 color_green_to_print = '\033[1;92m'
@@ -48,8 +59,7 @@ def create_label(master, text, row, column):
     label.grid(row=row, column=column)
 
 
-def create_radiobuttons(master, row, column):
-    # @todo check
+def create_radio_buttons(master, row, column):
     var = StringVar()
     less_rb = Radiobutton(master=master, text=less_text, value=less_text, variable=var)
     less_rb.select()
@@ -64,8 +74,8 @@ def create_entry(master, row, column):
     entry.grid(row=row, column=column)
     entry.insert(0, placeholder)
     entry.configure(state='disabled')
-    entry.bind('<Button-1>', lambda x: on_focus_in(entry))
-    entry.bind('<FocusOut>', lambda x: on_focus_out(entry, placeholder))
+    entry.bind('<Button-1>', lambda x_: on_focus_in(entry))
+    entry.bind('<FocusOut>', lambda x_: on_focus_out(entry, placeholder))
     return entry
 
 
@@ -74,19 +84,13 @@ def create_filter(master, filter_text):
     create_label(master, filter_text, counter_row, counter_column)
     counter_column += 1
 
-    rb = create_radiobuttons(master, counter_row, counter_column)
+    rb = create_radio_buttons(master, counter_row, counter_column)
     counter_column += 2
 
     e = create_entry(master, counter_row, counter_column)
     counter_row += 1
     counter_column = 0
     return rb, e
-
-
-def print_data(event):
-    global rb_pe, pe
-    print(rb_pe.get())
-    print(pe.get())
 
 
 def get_current_time_milliseconds():
@@ -195,10 +199,16 @@ def get_data_yf():
         # summaryDetail - priceToSalesTrailing12Months - raw
         try:
             if not str(data['summaryDetail']['priceToSalesTrailing12Months']).__contains__('-'):
-                if float(data['summaryDetail']['priceToSalesTrailing12Months']['raw']) > target_ps:
-                    print(color_red_to_print + 'Skip due to high P/S: ' + companies[j][0])
-                    companies.remove(companies[j])
-                    continue
+                if sign_ps == '>':
+                    if float(data['summaryDetail']['priceToSalesTrailing12Months']['raw']) > target_ps:
+                        print(color_red_to_print + 'Skip due to high P/S: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
+                else:
+                    if float(data['summaryDetail']['priceToSalesTrailing12Months']['raw']) < target_ps:
+                        print(color_red_to_print + 'Skip due to low P/S: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
             else:
                 print(color_red_to_print + 'Skip due to negative P/S: ' + companies[j][0])
                 companies.remove(companies[j])
@@ -211,10 +221,16 @@ def get_data_yf():
         # defaultKeyStatistics - trailingEps - raw
         try:
             if not str(data['defaultKeyStatistics']['trailingEps']).__contains__('-'):
-                if float(data['defaultKeyStatistics']['trailingEps']['raw']) < target_eps:
-                    print(color_red_to_print + 'Skip due to low EPS: ' + companies[j][0])
-                    companies.remove(companies[j])
-                    continue
+                if sign_eps == '<':
+                    if float(data['defaultKeyStatistics']['trailingEps']['raw']) < target_eps:
+                        print(color_red_to_print + 'Skip due to low EPS: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
+                else:
+                    if float(data['defaultKeyStatistics']['trailingEps']['raw']) > target_eps:
+                        print(color_red_to_print + 'Skip due to high EPS: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
             else:
                 print(color_red_to_print + 'Skip due to negative EPS: ' + companies[j][0])
                 companies.remove(companies[j])
@@ -224,20 +240,47 @@ def get_data_yf():
             companies.remove(companies[j])
             continue
 
-        # financialData - - raw
+        # financialData - returnOnEquity, returnOnAssets, priceToBook - raw
         try:
-            if float(data['financialData']['returnOnEquity']['raw']) < target_roe or float(
-                    data['financialData']['returnOnAssets']['raw']) < target_roa:
-                print(color_red_to_print + 'Skip due to low return on equity/assets: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
-            elif (float(data['financialData']['returnOnEquity']['raw']) < 2 * target_roe or
-                  float(data['financialData']['returnOnAssets']['raw']) < 2 * target_roa):
-                # defaultKeyStatistics - - raw
-                if float(data['defaultKeyStatistics']['priceToBook']['raw']) > target_pb:
-                    print(color_red_to_print + 'Skip due to high P/B: ' + companies[j][0])
+            if sign_roe == '<':
+                if float(data['financialData']['returnOnEquity']['raw']) < target_roe:
+                    print(color_red_to_print + 'Skip due to low return on equity: ' + companies[j][0])
                     companies.remove(companies[j])
                     continue
+            else:
+                if float(data['financialData']['returnOnEquity']['raw']) > target_roe:
+                    print(color_red_to_print + 'Skip due to high return on equity: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
+            if sign_roa == '<':
+                if float(data['financialData']['returnOnAssets']['raw']) < target_roa:
+                    print(color_red_to_print + 'Skip due to low return on assets: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
+            else:
+                if float(data['financialData']['returnOnAssets']['raw']) > target_roa:
+                    print(color_red_to_print + 'Skip due to high return on assets: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
+            if sign_roe == '<' and sign_roa == '<':
+                if (float(data['financialData']['returnOnEquity']['raw']) < 2 * target_roe or
+                        float(data['financialData']['returnOnAssets']['raw']) < 2 * target_roa):
+                    # defaultKeyStatistics - - raw
+                    if sign_pb == '>':
+                        if float(data['defaultKeyStatistics']['priceToBook']['raw']) > target_pb:
+                            print(color_red_to_print + 'Skip due to high P/B: ' + companies[j][0])
+                            companies.remove(companies[j])
+                            continue
+                    else:
+                        if float(data['defaultKeyStatistics']['priceToBook']['raw']) < target_pb:
+                            print(color_red_to_print + 'Skip due to low P/B: ' + companies[j][0])
+                            companies.remove(companies[j])
+                            continue
+            else:
+                print(color_red_to_print + 'P/B should be considered only if ROE and ROA'
+                                           ' are searched with a less than sign (<): ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
         except KeyError:
             print(color_red_to_print + 'Skip due to unavailable ROE or ROA or P/B: ' + companies[j][0])
             companies.remove(companies[j])
@@ -245,28 +288,101 @@ def get_data_yf():
 
         # price - marketCap - raw
         try:
-            if float(data['price']['marketCap']['raw']) < target_market_cap:
-                print(color_red_to_print + 'Skip due to low market cap: ' + companies[j][0])
-                companies.remove(companies[j])
-                continue
+            if sign_market_cap == '<':
+                if float(data['price']['marketCap']['raw']) < target_market_cap:
+                    print(color_red_to_print + 'Skip due to low market cap: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
+            else:
+                if float(data['price']['marketCap']['raw']) > target_market_cap:
+                    print(color_red_to_print + 'Skip due to high market cap: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
         except KeyError:
             print(color_red_to_print + 'Skip due to unavailable market cap: ' + companies[j][0])
             companies.remove(companies[j])
             continue
 
-        # defaultKeyStatistics - - raw
+        # defaultKeyStatistics - forwardPE - raw
         try:
             if not str(data['defaultKeyStatistics']['forwardPE']['raw']).__contains__('-'):
-                if float(data['defaultKeyStatistics']['forwardPE']['raw']) > target_pe:
-                    print(color_red_to_print + 'Skip due to high P/E: ' + companies[j][0])
-                    companies.remove(companies[j])
-                    continue
+                if sign_pe == '>':
+                    if float(data['defaultKeyStatistics']['forwardPE']['raw']) > target_pe:
+                        print(color_red_to_print + 'Skip due to high P/E: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
+                else:
+                    if float(data['defaultKeyStatistics']['forwardPE']['raw']) < target_pe:
+                        print(color_red_to_print + 'Skip due to low P/E: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
             else:
                 print(color_red_to_print + 'Skip due to negative P/E: ' + companies[j][0])
                 companies.remove(companies[j])
                 continue
         except KeyError:
-            print(color_red_to_print + 'Skip due to unavailable PE: ' + companies[j][0])
+            print(color_red_to_print + 'Skip due to unavailable P/E: ' + companies[j][0])
+            companies.remove(companies[j])
+            continue
+
+        # financialData - ebitda - raw
+        try:
+            if not str(data['financialData']['ebitda']['raw']).__contains__('-'):
+                if sign_ebitda == '<':
+                    if float(data['financialData']['ebitda']['raw']) < target_ebitda:
+                        print(color_red_to_print + 'Skip due to low EBITDA: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
+                else:
+                    if float(data['financialData']['ebitda']['raw']) > target_ebitda:
+                        print(color_red_to_print + 'Skip due to high EBITDA: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
+            else:
+                print(color_red_to_print + 'Skip due to negative EBITDA: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+        except KeyError:
+            print(color_red_to_print + 'Skip due to unavailable EBITDA: ' + companies[j][0])
+            companies.remove(companies[j])
+            continue
+
+        # financialData - totalDebt - raw
+        try:
+            if sign_total_debt == '>':
+                if float(data['financialData']['totalDebt']['raw']) > target_total_debt:
+                    print(color_red_to_print + 'Skip due to high total debt: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
+            else:
+                if float(data['financialData']['totalDebt']['raw']) < target_total_debt:
+                    print(color_red_to_print + 'Skip due to low total debt: ' + companies[j][0])
+                    companies.remove(companies[j])
+                    continue
+        except KeyError:
+            print(color_red_to_print + 'Skip due to unavailable total debt: ' + companies[j][0])
+            companies.remove(companies[j])
+            continue
+
+        # financialData - revenuePerShare - raw
+        try:
+            if not str(data['financialData']['revenuePerShare']['raw']).__contains__('-'):
+                if sign_ebitda == '>':
+                    if float(data['financialData']['revenuePerShare']['raw']) > target_rps:
+                        print(color_red_to_print + 'Skip due to high RPS: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
+                else:
+                    if float(data['financialData']['revenuePerShare']['raw']) < target_rps:
+                        print(color_red_to_print + 'Skip due to low RPS: ' + companies[j][0])
+                        companies.remove(companies[j])
+                        continue
+            else:
+                print(color_red_to_print + 'Skip due to negative RPS: ' + companies[j][0])
+                companies.remove(companies[j])
+                continue
+        except KeyError:
+            print(color_red_to_print + 'Skip due to unavailable RPS: ' + companies[j][0])
             companies.remove(companies[j])
             continue
 
@@ -302,6 +418,15 @@ def update_data():
     # append_number_of_stocks_output()
 
 
+def print_data(event):
+    global rb_pe, pe, rb_ps, ps, rb_pb, pb, rb_eps, eps, rb_ebitda, ebitda, rb_debt, debt, rb_rps, rps, \
+        rb_roe, roe, rb_roa, roa, rb_cap, cap
+    print(rb_pe.get())
+    print(pe.get())
+
+    # get_data_yf() @todo
+
+
 if __name__ == '__main__':
     start_timer = get_current_time_milliseconds()
     update_data()
@@ -316,43 +441,40 @@ if __name__ == '__main__':
     window.maxsize(2880, 1620)
     window.iconphoto(False, PhotoImage(file='logo.png'))
 
-    frame_results = Frame()
-    label_results = Label(master=frame_results, text='Results')
-
     length_of_columns = []
     for x in range(len(companies[0]) - 2):
         length_of_columns.append(len(companies[0][x]))
     length_of_columns.append(None)
     length_of_columns.append(None)
     table = Table(master=window, height=600, column_headers=companies[0], column_min_widths=length_of_columns)
-    table.pack()
+    table.pack(side=LEFT)
 
     table.set_data(companies[1:])
-    table.insert_row(['WWWW', 'F', 'A', 100.0, 2])
+    table.insert_row(['WWWWW', 'F', 'A', 100.0, 2])
     window.update()
 
-    # frame_settings = Frame()
-    # counter_row = 0
-    # counter_column = 0
-    #
-    # rb_pe, pe = create_filter(frame_settings, 'P/E:')
-    # rb_ps, ps = create_filter(frame_settings, 'P/S:')
-    # rb_pb, pb = create_filter(frame_settings, 'P/B:')
-    # rb_eps, eps = create_filter(frame_settings, 'EPS:')
-    # rb_ebitda, ebitda = create_filter(frame_settings, 'EBITDA:')
-    # rb_debt, debt = create_filter(frame_settings, 'Total debt:')
-    # rb_coefficient, coefficient = create_filter(frame_settings, 'Coefficient net income/total debt:')
-    # rb_roe, roe = create_filter(frame_settings, 'ROE:')
-    # rb_roa, roa = create_filter(frame_settings, 'ROA:')
-    # rb_cap, cap = create_filter(frame_settings, 'Market capitalization:')
-    #
-    # btn_confirm = Button(master=frame_settings, text='Confirm')
-    # btn_confirm.grid(row=counter_row, column=counter_column)
-    # btn_confirm.bind('<Button-1>', print_data)
-    #
-    # frame_results.grid(row=0, column=0)
-    # frame_settings.grid(row=0, column=1)
-    # frame_results.pack()
-    # frame_settings.pack()
+    frame_settings = Frame()
+    counter_row = 0
+    counter_column = 0
+
+    label_filters = Label(master=frame_settings, text='Filters')
+    label_filters.grid(row=counter_row, column=counter_column + 1)
+    counter_row += 1
+    rb_pe, pe = create_filter(frame_settings, 'P/E:')
+    rb_ps, ps = create_filter(frame_settings, 'P/S:')
+    rb_eps, eps = create_filter(frame_settings, 'EPS:')
+    rb_ebitda, ebitda = create_filter(frame_settings, 'EBITDA:')
+    rb_debt, debt = create_filter(frame_settings, 'Total debt:')
+    rb_rps, rps = create_filter(frame_settings, 'RPS:')
+    rb_roe, roe = create_filter(frame_settings, 'ROE:')
+    rb_roa, roa = create_filter(frame_settings, 'ROA:')
+    rb_pb, pb = create_filter(frame_settings, 'P/B:')
+    rb_cap, cap = create_filter(frame_settings, 'Market capitalization:')
+
+    btn_confirm = Button(master=frame_settings, text='Confirm')
+    btn_confirm.grid(row=counter_row, column=counter_column)
+    btn_confirm.bind('<Button-1>', print_data)
+
+    frame_settings.pack()
     window.state('zoomed')
     window.mainloop()
