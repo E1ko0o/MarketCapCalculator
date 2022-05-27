@@ -1,54 +1,51 @@
 Symbol,Sector,Industry,Current/last price in USD,Number of stocks
-TSM,Technology,Semiconductors,90.78,3
-BNTX,Healthcare,Biotechnology,163.0,1
-TTE,Energy,Oil & Gas Integrated,54.7,5
-AAPL,Technology,Consumer Electronics,137.59,2
-BRK-B,Financial Services,Insurance-Diversified,304.05,0
-GOOG,Communication Services,Internet Content & Information,2186.26,0
-MSFT,Technology,Software-Infrastructure,252.56,1
-FB,Communication Services,Internet Content & Information,193.54,1
-XOM,Energy,Oil & Gas Integrated,91.86,3
-VZ,Communication Services,Telecom Services,49.53,6
-CVX,Energy,Oil & Gas Integrated,167.82,1
-PFE,Healthcare,Drug Manufacturers-General,52.47,5
-INTC,Technology,Semiconductors,41.65,7
-HD,Consumer Cyclical,Home Improvement Retail,287.19,1
-MRK,Healthcare,Drug Manufacturers-General,93.55,3
-MRNA,Healthcare,Biotechnology,136.25,2
-UPS,Industrials,Integrated Freight & Logistics,171.04,1
-COP,Energy,Oil & Gas E&P,105.02,2
-QCOM,Technology,Semiconductors,131.6,2
-NUE,Basic Materials,Steel,119.97,2
-MU,Technology,Semiconductors,68.9,4
-TXN,Technology,Semiconductors,169.81,1
-DOW,Basic Materials,Chemicals,68.11,4
-AMAT,Technology,Semiconductor Equipment & Materials,106.46,2
-MMM,Industrials,Conglomerates,143.83,2
-NKE,Consumer Cyclical,Footwear & Accessories,108.0,2
-X,Basic Materials,Steel,23.79,12
-LEN,Consumer Cyclical,Residential Construction,74.44,4
-LRCX,Technology,Semiconductor Equipment & Materials,474.12,0
-TSN,Consumer Defensive,Farm Products,85.28,3
-DVN,Energy,Oil & Gas E&P,69.92,4
-AMD,Technology,Semiconductors,93.5,3
-WLK,Basic Materials,Specialty Chemicals,126.21,2
-NRG,Utilities,Utilities-Independent Power Producers,45.72,6
-CL,Consumer Defensive,Household & Personal Products,75.13,4
-BBY,Consumer Cyclical,Specialty Retail,72.36,4
-PHM,Consumer Cyclical,Residential Construction,42.74,7
-FOX,Communication Services,Broadcasting,30.94,9
-AA,Basic Materials,Aluminum,60.57,4
-MHK,Consumer Cyclical-Furnishings, Fixtures & Appliances,135.12,2
-TER,Technology,Semiconductor Equipment & Materials,102.37,2
-TPR,Consumer Cyclical,Luxury Goods,31.41,9
-ZM,Technology,Software-Application,89.74,3
-BWA,Consumer Cyclical,Auto Parts,38.15,7
-GNRC,Industrials,Specialty Industrial Machinery,220.84,1
-CROX,Consumer Cyclical,Footwear & Accessories,54.01,5
-PDCE,Energy,Oil & Gas E&P,67.83,4
-SNDR,Industrials,Trucking,22.65,13
-WLL,Energy,Oil & Gas E&P,77.35,3
-REGI,Energy,Oil & Gas Refining & Marketing,61.44,4
-COHU,Technology,Semiconductor Equipment & Materials,27.94,10
-RVLV,Consumer Cyclical,Internet Retail,27.74,10
-BX,Financial Services,Asset Management,107.57,2
+TSM,Technology,Semiconductors,93.35
+BNTX,Healthcare,Biotechnology,158.57
+TTE,Energy,Oil & Gas Integrated,58.35
+AAPL,Technology,Consumer Electronics,146.225
+BRK-B,Financial Services,Insurance-Diversified,314.81
+GOOG,Communication Services,Internet Content & Information,2213.49
+FB,Communication Services,Internet Content & Information,190.66
+XOM,Energy,Oil & Gas Integrated,96.12
+VZ,Communication Services,Telecom Services,50.98
+CVX,Energy,Oil & Gas Integrated,177.1
+PFE,Healthcare,Drug Manufacturers-General,54.0
+INTC,Technology,Semiconductors,43.995
+HD,Consumer Cyclical,Home Improvement Retail,304.25
+MRK,Healthcare,Drug Manufacturers-General,92.07
+MRNA,Healthcare,Biotechnology,136.87
+UPS,Industrials,Integrated Freight & Logistics,181.23
+COP,Energy,Oil & Gas E&P,112.81
+QCOM,Technology,Semiconductors,136.8
+NUE,Basic Materials,Steel,133.91
+MU,Technology,Semiconductors,72.1157
+TXN,Technology,Semiconductors,176.14
+DOW,Basic Materials,Chemicals,67.94
+AMAT,Technology,Semiconductor Equipment & Materials,116.735
+MMM,Industrials,Conglomerates,148.26
+NKE,Consumer Cyclical,Footwear & Accessories,114.75
+X,Basic Materials,Steel,25.81
+LEN,Consumer Cyclical,Residential Construction,79.285
+LRCX,Technology,Semiconductor Equipment & Materials,520.53
+TSN,Consumer Defensive,Farm Products,90.1
+DVN,Energy,Oil & Gas E&P,74.4801
+AMD,Technology,Semiconductors,100.845
+WLK,Basic Materials,Specialty Chemicals,131.205
+NRG,Utilities,Utilities-Independent Power Producers,46.33
+CL,Consumer Defensive,Household & Personal Products,78.56
+BBY,Consumer Cyclical,Specialty Retail,83.75
+PHM,Consumer Cyclical,Residential Construction,45.065
+FOX,Communication Services,Entertainment,31.94
+AA,Basic Materials,Aluminum,64.36
+MHK,Consumer Cyclical,Furnishings- Fixtures & Appliances,140.72
+TER,Technology,Semiconductor Equipment & Materials,106.855
+TPR,Consumer Cyclical,Luxury Goods,33.855
+BWA,Consumer Cyclical,Auto Parts,39.76
+GNRC,Industrials,Specialty Industrial Machinery,252.0
+CROX,Consumer Cyclical,Footwear & Accessories,55.05
+PDCE,Energy,Oil & Gas E&P,74.77
+SNDR,Industrials,Trucking,24.17
+WLL,Energy,Oil & Gas E&P,84.69
+REGI,Energy,Oil & Gas Refining & Marketing,61.35
+COHU,Technology,Semiconductor Equipment & Materials,29.92
+RVLV,Consumer Cyclical,Internet Retail,29.87
