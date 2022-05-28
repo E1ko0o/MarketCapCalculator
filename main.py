@@ -92,6 +92,17 @@ def create_filter(master, filter_text):
     return rb, e
 
 
+def create_calculate_part_of_ui(master):
+    global counter_row, counter_column
+    create_label(master, 'Calculate number of stocks for $', counter_row, counter_column)
+    counter_column += 1
+
+    e = create_entry(master, counter_row, counter_column)
+    counter_row += 1
+    counter_column = 0
+    return e
+
+
 def get_current_time_milliseconds():
     return round(time.time() * 1000)
 
@@ -396,12 +407,20 @@ def get_data_yf():
     alert('Done!', 'Companies analyzed!')
 
 
-def count_number_of_stocks_using_number_of_companies(amount_in_usd: int):
-    percentage = round(1 / len(companies), 5)
-    amount_for_company = round(amount_in_usd * percentage, 5)
-    for i in range(len(companies)):
-        number_of_stocks = float(amount_for_company) // float(companies[i][3])
-        companies[i].append(int(number_of_stocks))
+def calculate_number_of_stocks_using_number_of_companies(event):
+    global e_calculate
+    try:
+        amount_in_usd = int(e_calculate.get())
+        percentage = round(1 / len(companies), 5)
+        amount_for_company = round(amount_in_usd * percentage, 5)
+        for i in range(len(companies)):
+            number_of_stocks = float(amount_for_company) // float(companies[i][3])
+            companies[i].append(int(number_of_stocks))
+    except ValueError:
+        if e_calculate.get() != placeholder:
+            alert('Error!', 'You should type an integer number.')
+    except ZeroDivisionError:
+        alert('Error!', 'No companies to calculate number of stocks. \nFirstly, You should find some companies.')
 
 
 def update_data():
@@ -410,7 +429,7 @@ def update_data():
     read_csv_and_fill_data()
     prepare_output_file()
     get_data_yf()
-    # count_number_of_stocks_using_number_of_companies(16000)
+    # calculate_number_of_stocks_using_number_of_companies(16000)
     # append_number_of_stocks_output()
 
 
@@ -427,48 +446,56 @@ def print_data(event):
         sign_pe = '>'
     if pe.get() != 'Input a number':
         target_pe = float(pe.get())
+
     if rb_ps.get() == 'less':
         sign_ps = '<'
     else:
         sign_ps = '>'
     if ps.get() != 'Input a number':
         target_ps = float(ps.get())
+
     if rb_pb.get() == 'less':
         sign_pb = '<'
     else:
         sign_pb = '>'
     if pb.get() != 'Input a number':
         target_pb = float(pb.get())
+
     if rb_eps.get() == 'less':
         sign_eps = '<'
     else:
         sign_eps = '>'
     if eps.get() != 'Input a number':
         target_eps = float(eps.get())
+
     if rb_roe.get() == 'less':
         sign_roe = '<'
     else:
         sign_roe = '>'
     if roe.get() != 'Input a number':
         target_roe = float(roe.get())
+
     if rb_roa.get() == 'less':
         sign_roa = '<'
     else:
         sign_roa = '>'
     if roa.get() != 'Input a number':
         target_roa = float(roa.get())
+
     if rb_cap.get() == 'less':
         sign_market_cap = '<'
     else:
         sign_market_cap = '>'
     if cap.get() != 'Input a number':
         target_market_cap = float(cap.get())
+
     if rb_ebitda.get() == 'less':
         sign_ebitda = '<'
     else:
         sign_ebitda = '>'
     if ebitda.get() != 'Input a number':
         target_ebitda = float(ebitda.get())
+
     if rb_rps.get() == 'less':
         sign_rps = '<'
     else:
@@ -510,6 +537,7 @@ if __name__ == '__main__':
     label_find2 = Label(master=frame_settings, text='has...')
     label_find2.grid(row=counter_row, column=counter_column + 1)
     counter_row += 1
+
     rb_pe, pe = create_filter(frame_settings, 'P/E:')
     rb_ps, ps = create_filter(frame_settings, 'P/S:')
     rb_eps, eps = create_filter(frame_settings, 'EPS:')
@@ -522,8 +550,15 @@ if __name__ == '__main__':
 
     btn_confirm = Button(master=frame_settings, text='Confirm')
     btn_confirm.grid(row=counter_row, column=counter_column + 1)
-    counter_row += 1
     btn_confirm.bind('<Button-1>', print_data)
+    counter_row += 1
+
+    e_calculate = create_calculate_part_of_ui(frame_settings)
+
+    btn_confirm = Button(master=frame_settings, text='Calculate')
+    btn_confirm.grid(row=counter_row, column=counter_column + 1)
+    btn_confirm.bind('<Button-1>', calculate_number_of_stocks_using_number_of_companies)
+    counter_row += 1
 
     frame_settings.pack()
     window.state('zoomed')
