@@ -386,22 +386,23 @@ class Table(Frame):
         self._number_of_rows -= n
 
     def set_data(self, data):
-        n = len(data)
-        m = len(data[0])
+        if len(data) != 0:
+            n = len(data)
+            m = len(data[0])
 
-        number_of_rows = self._number_of_rows
+            number_of_rows = self._number_of_rows
 
-        if number_of_rows > n:
-            self._pop_n_rows(number_of_rows - n)
-        elif number_of_rows < n:
-            self._append_n_rows(n - number_of_rows)
+            if number_of_rows > n:
+                self._pop_n_rows(number_of_rows - n)
+            elif number_of_rows < n:
+                self._append_n_rows(n - number_of_rows)
 
-        for i in range(n):
-            for j in range(m):
-                self._data_vars[i][j].set(data[i][j])
+            for i in range(n):
+                for j in range(m):
+                    self._data_vars[i][j].set(data[i][j])
 
-        if self._on_change_data is not None:
-            self._on_change_data()
+            if self._on_change_data is not None:
+                self._on_change_data()
 
     def get_data(self):
         number_of_rows = self._number_of_rows
