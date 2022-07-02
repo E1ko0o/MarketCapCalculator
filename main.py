@@ -30,6 +30,19 @@ sign_pb = '<'  # less is better
 target_market_cap = 1_000_000_000
 sign_market_cap = '>'  # more is better
 
+target_payout_ratio = 0
+sign_payout_ratio = '>'  # more is better
+target_dividend_yield = 0
+sign_dividend_yield = '>'  # more is better
+target_operating_cashflow = 0
+sign_operating_cashflow = '>'  # more is better
+target_free_cashflow = 0
+sign_free_cashflow = '>'  # more is better
+target_quick_ratio = 0
+sign_quick_ratio = '>'  # more is better
+# summaryDetail(payoutRatio, dividendYield)
+# financialData(operatingCashflow, freeCashflow, quickRatio)
+
 # Colors for print
 color_green_to_print = '\033[1;92m'
 color_red_to_print = '\033[1;91m'
@@ -331,7 +344,12 @@ def get_data_requests(data_outer=None):
                     or check_raw(data, 'defaultKeyStatistics', 'trailingEps', 'EPS', target_eps, sign_eps) \
                     or check_raw(data, 'defaultKeyStatistics', 'forwardPE', 'P/E', target_pe, sign_pe) \
                     or check_raw(data, 'financialData', 'ebitda', 'EBITDA', target_ebitda, sign_ebitda) \
-                    or check_raw(data, 'financialData', 'revenuePerShare', 'RPS', target_rps, sign_rps):
+                    or check_raw(data, 'financialData', 'revenuePerShare', 'RPS', target_rps, sign_rps) \
+                    or check_raw(data, 'summaryDetail', 'payoutRatio', 'Payout ratio', target_payout_ratio, sign_payout_ratio) \
+                    or check_raw(data, 'summaryDetail', 'dividendYield', 'Dividend yield', target_dividend_yield, sign_dividend_yield) \
+                    or check_raw(data, 'financialData', 'operatingCashflow', 'Operating Cashflow', target_operating_cashflow, sign_operating_cashflow) \
+                    or check_raw(data, 'financialData', 'freeCashflow', 'Free Cashflow', target_free_cashflow, sign_free_cashflow) \
+                    or check_raw(data, 'financialData', 'quickRatio', 'Quick Ratio', target_quick_ratio, sign_quick_ratio):
                 companies.remove(companies[j])
                 continue
 
@@ -373,7 +391,12 @@ def get_data_requests(data_outer=None):
                     or check_raw(data, 'defaultKeyStatistics', 'trailingEps', 'EPS', target_eps, sign_eps) \
                     or check_raw(data, 'defaultKeyStatistics', 'forwardPE', 'P/E', target_pe, sign_pe) \
                     or check_raw(data, 'financialData', 'ebitda', 'EBITDA', target_ebitda, sign_ebitda) \
-                    or check_raw(data, 'financialData', 'revenuePerShare', 'RPS', target_rps, sign_rps):
+                    or check_raw(data, 'financialData', 'revenuePerShare', 'RPS', target_rps, sign_rps) \
+                    or check_raw(data, 'summaryDetail', 'payoutRatio', 'Payout ratio', target_payout_ratio, sign_payout_ratio) \
+                    or check_raw(data, 'summaryDetail', 'dividendYield', 'Dividend yield', target_dividend_yield, sign_dividend_yield) \
+                    or check_raw(data, 'financialData', 'operatingCashflow', 'Operating Cashflow', target_operating_cashflow, sign_operating_cashflow) \
+                    or check_raw(data, 'financialData', 'freeCashflow', 'Free Cashflow', target_free_cashflow, sign_free_cashflow) \
+                    or check_raw(data, 'financialData', 'quickRatio', 'Quick Ratio', target_quick_ratio, sign_quick_ratio):
                 data_outer.remove(data_outer[j])
                 companies.remove(companies[j])
                 continue
@@ -420,7 +443,10 @@ def print_data(event):
     global rb_pe, pe, rb_ps, ps, rb_pb, pb, rb_eps, eps, rb_ebitda, ebitda, rb_rps, rps, \
         rb_roe, roe, rb_roa, roa, rb_cap, cap, target_pe, sign_pe, target_ps, sign_ps, target_pb, sign_pb, \
         target_eps, sign_eps, target_roe, sign_roe, target_roa, sign_roa, target_market_cap, sign_market_cap, \
-        target_ebitda, sign_ebitda, target_rps, sign_rps
+        target_ebitda, sign_ebitda, target_rps, sign_rps, rb_pay, pay, target_payout_ratio, sign_payout_ratio, div, \
+        rb_div, target_dividend_yield, sign_dividend_yield, rb_operation, operation, target_operating_cashflow, \
+        sign_operating_cashflow, free, rb_free, target_free_cashflow, sign_free_cashflow, quick, rb_quick, \
+        target_quick_ratio, sign_quick_ratio
     if rb_pe.get() == less_text:
         sign_pe = '<'
     else:
@@ -484,6 +510,41 @@ def print_data(event):
     if rps.get() != 'Input a number':
         target_rps = float(rps.get())
 
+    if rb_pay.get() == less_text:
+        sign_payout_ratio = '<'
+    else:
+        sign_payout_ratio = '>'
+    if pay.get() != 'Input a number':
+        target_payout_ratio = float(pay.get())
+
+    if rb_div.get() == less_text:
+        sign_dividend_yield = '<'
+    else:
+        sign_dividend_yield = '>'
+    if div.get() != 'Input a number':
+        target_dividend_yield = float(div.get())
+
+    if rb_operation.get() == less_text:
+        sign_operating_cashflow = '<'
+    else:
+        sign_operating_cashflow = '>'
+    if operation.get() != 'Input a number':
+        target_operating_cashflow = float(operation.get())
+
+    if rb_free.get() == less_text:
+        sign_free_cashflow = '<'
+    else:
+        sign_free_cashflow = '>'
+    if free.get() != 'Input a number':
+        target_free_cashflow = float(free.get())
+
+    if rb_quick.get() == less_text:
+        sign_quick_ratio = '<'
+    else:
+        sign_quick_ratio = '>'
+    if quick.get() != 'Input a number':
+        target_quick_ratio = float(quick.get())
+
     # @todo
     # read_csv_symbols()
     prepare_output_file()
@@ -536,6 +597,11 @@ if __name__ == '__main__':
     rb_roa, roa = create_filter(frame_settings, 'ROA:')
     rb_pb, pb = create_filter(frame_settings, 'P/B:')
     rb_cap, cap = create_filter(frame_settings, 'Market cap:')
+    rb_pay, pay = create_filter(frame_settings, 'Payout ratio:')
+    rb_div, div = create_filter(frame_settings, 'Dividend yield:')
+    rb_operation, operation = create_filter(frame_settings, 'Operating CF:')
+    rb_free, free = create_filter(frame_settings, 'Free CF:')
+    rb_quick, quick = create_filter(frame_settings, 'Quick ratio:')
 
     e_calculate = create_calculate_part_of_ui(frame_settings)
 
